@@ -48,4 +48,4 @@ jobs:
         run: pnpm -F @ensdomains/ensjs lint
 
       - name: Type check
-        run: pnpm -F @ensdomains/ensjs exec tsc --project tsconfig.build.json --noEmit --emitDeclarationOnly false
+        run: pnpm -F @ensdomains/ensjs build

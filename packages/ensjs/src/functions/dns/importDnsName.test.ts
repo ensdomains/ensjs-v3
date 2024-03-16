@@ -1,6 +1,7 @@
+import { afterEach } from 'node:test'
 import { parseAbi, parseEther, type Address, type Hex } from 'viem'
+import { beforeAll, beforeEach, expect, it, vi } from 'vitest'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
-import { getVersion } from '../../errors/error-utils.js'
 import {
   deploymentAddresses,
   publicClient,
@@ -14,6 +15,10 @@ import getDnsImportData, {
   type GetDnsImportDataReturnType,
 } from './getDnsImportData.js'
 import importDnsName from './importDnsName.js'
+
+vi.setConfig({
+  testTimeout: 10000,
+})
 
 const name = 'taytems.xyz'
 const address = '0x8e8Db5CcEF88cca9d624701Db544989C996E3216'
@@ -51,9 +56,6 @@ beforeEach(async () => {
 afterEach(async () => {
   await testClient.revert({ id: snapshot })
 })
-
-jest.setTimeout(10000)
-jest.retryTimes(2)
 
 it('should import a DNS name with no address', async () => {
   const tx = await importDnsName(walletClient, {
@@ -131,12 +133,12 @@ it('should throw error if resolver is specified when claiming without an address
       account: accounts[0],
     } as any),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Additional parameter specified: resolverAddress
+    [AdditionalParameterSpecifiedError: Additional parameter specified: resolverAddress
 
     - Allowed parameters: name, dnsImportData
 
     Details: resolverAddress cannot be specified when claiming without an address
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })

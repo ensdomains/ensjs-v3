@@ -1,7 +1,12 @@
 import { SignedSet } from '@ensdomains/dnsprovejs'
 import { toBytes } from 'viem'
+import { expect, it, vi } from 'vitest'
 import { publicClient } from '../../test/addTestContracts.js'
 import getDnsImportData, { type RrSetWithSig } from './getDnsImportData.js'
+
+vi.setConfig({
+  testTimeout: 10000,
+})
 
 const decodeProofs = (proofs: RrSetWithSig[]) =>
   proofs.map((proof) =>
@@ -10,9 +15,6 @@ const decodeProofs = (proofs: RrSetWithSig[]) =>
       Buffer.from(toBytes(proof.sig)),
     ),
   )
-
-jest.setTimeout(10000)
-jest.retryTimes(2)
 
 it('returns all rrsets', async () => {
   const result = await getDnsImportData(publicClient, {

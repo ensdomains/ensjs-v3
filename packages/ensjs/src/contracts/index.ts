@@ -18,10 +18,10 @@ export {
   supportedContracts,
   type ChainWithEns,
   type CheckedChainWithEns,
+  type ClientWithAccount,
   type ClientWithEns,
   type SupportedChain,
   type SupportedContract,
-  type WalletWithEns,
 } from './consts.js'
 export {
   dnsRegistrarErrors,

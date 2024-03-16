@@ -22,6 +22,14 @@ export class DnsDnssecVerificationFailedError extends BaseError {
   }
 }
 
+export class DnsDnssecWildcardExpansionError extends BaseError {
+  override name = 'DnsDnssecWildcardExpansionError'
+
+  constructor() {
+    super('DNSSEC wildcard expansion not supported')
+  }
+}
+
 export class DnsNoTxtRecordError extends BaseError {
   override name = 'DnsNoTxtRecordError'
 

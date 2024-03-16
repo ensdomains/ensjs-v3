@@ -1,6 +1,7 @@
 # hardhat
 /cache
 /artifacts
+/coverage
 README.md
 LICENSE
 

@@ -6,7 +6,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { publicResolverMulticallSnippet } from '../../contracts/publicResolver.js'
 import { NoRecordsSpecifiedError } from '../../errors/public.js'
 import type {
@@ -44,7 +45,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  _wallet: WalletWithEns<Transport, TChain, TAccount>,
+  _wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, resolverAddress, ...records }: SetRecordsDataParameters,
 ): SetRecordsDataReturnType => {
   const callArray = generateRecordCallArray({
@@ -69,7 +70,7 @@ export const makeFunctionData = <
 
 /**
  * Sets multiple records for a name on a resolver.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetRecordsParameters}
  * @returns Transaction hash. {@link SetRecordsReturnType}
  *
@@ -101,7 +102,7 @@ async function setRecords<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     resolverAddress,
@@ -126,7 +127,7 @@ async function setRecords<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setRecords.makeFunctionData = makeFunctionData

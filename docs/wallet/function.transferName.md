@@ -42,7 +42,7 @@ const hash = await transferName(wallet, {
 
 | Parameter    | Type                                                                 | Description            |
 | :----------- | :------------------------------------------------------------------- | :--------------------- |
-| `wallet`     | `object`                                                             | WalletWithEns          |
+| `wallet`     | `object`                                                             | ClientWithAccount      |
 | `parameters` | `TransferNameParameters`\< `TChain`, `TAccount`, `TChainOverride` \> | TransferNameParameters |
 
 ## Returns

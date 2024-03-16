@@ -43,7 +43,7 @@ const hash = await setTextRecord(wallet, {
 
 | Parameter                    | Type               | Description                       |
 | :--------------------------- | :----------------- | :-------------------------------- |
-| `wallet`                     | `object`           | WalletWithEns                     |
+| `wallet`                     | `object`           | ClientWithAccount                 |
 | `parameters`                 | `object`           | SetTextRecordParameters           |
 | `parameters.key`             | `string`           | The text record key to set        |
 | `parameters.name`            | `string`           | The name to set a text record for |

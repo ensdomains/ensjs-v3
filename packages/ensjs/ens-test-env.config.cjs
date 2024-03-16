@@ -19,7 +19,7 @@ module.exports = {
     {
       command:
         process.env.STATIC_ENS === 'true' ? 'pnpm test:static' : 'pnpm test',
-      name: 'jest',
+      name: 'vitest',
       prefixColor: 'yellow.bold',
       finishOnExit: true,
     },

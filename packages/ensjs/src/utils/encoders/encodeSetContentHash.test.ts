@@ -1,4 +1,4 @@
-import { getVersion } from '../../errors/error-utils.js'
+import { describe, expect, it } from 'vitest'
 import {
   encodeSetContentHash,
   type EncodeSetContentHashParameters,
@@ -33,9 +33,9 @@ describe('encodeSetContentHash', () => {
     }
     expect(() => encodeSetContentHash(params))
       .toThrowErrorMatchingInlineSnapshot(`
-      "Invalid content hash
+        [InvalidContentHashError: Invalid content hash
 
-      Version: ${getVersion()}"
-    `)
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
+      `)
   })
 })

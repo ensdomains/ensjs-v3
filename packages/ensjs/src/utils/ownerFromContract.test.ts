@@ -1,4 +1,4 @@
-import { getVersion } from '../errors/error-utils.js'
+import { expect, it } from 'vitest'
 import { deploymentAddresses, publicClient } from '../test/addTestContracts.js'
 import { namehash } from './normalise.js'
 import { ownerFromContract } from './ownerFromContract.js'
@@ -43,10 +43,10 @@ it('uses registrar contract when contract is registrar', () => {
 it('throws when contract is not nameWrapper, registry, or registrar', () => {
   expect(() => ownerFromContract({ ...baseParams, contract: 'invalid' as any }))
     .toThrowErrorMatchingInlineSnapshot(`
-    "Invalid contract type: invalid
+      [InvalidContractTypeError: Invalid contract type: invalid
 
-    - Supported contract types: nameWrapper, registry, registrar
+      - Supported contract types: nameWrapper, registry, registrar
 
-    Version: ${getVersion()}"
-  `)
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
+    `)
 })

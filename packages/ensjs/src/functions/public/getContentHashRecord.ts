@@ -41,10 +41,14 @@ const decode = async (
   client: ClientWithEns,
   data: Hex | BaseError,
   passthrough: GenericPassthrough,
-  { strict }: Pick<GetContentHashRecordParameters, 'strict'>,
+  {
+    strict,
+    gatewayUrls,
+  }: Pick<GetContentHashRecordParameters, 'strict' | 'gatewayUrls'>,
 ): Promise<GetContentHashRecordReturnType> => {
   const urData = await universalWrapper.decode(client, data, passthrough, {
     strict,
+    gatewayUrls,
   })
   if (!urData) return null
   return _getContentHash.decode(client, urData.data, { strict })
@@ -73,7 +77,7 @@ type BatchableFunctionObject = GeneratedFunction<typeof encode, typeof decode>
  */
 const getContentHashRecord = generateFunction({ encode, decode }) as ((
   client: ClientWithEns,
-  { name, strict }: GetContentHashRecordParameters,
+  { name, strict, gatewayUrls }: GetContentHashRecordParameters,
 ) => Promise<GetContentHashRecordReturnType>) &
   BatchableFunctionObject
 

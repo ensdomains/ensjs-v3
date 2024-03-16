@@ -6,8 +6,9 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
+import { sendTransaction } from 'viem/actions'
 import { parseAccount } from 'viem/utils'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import {
   reverseRegistrarSetNameForAddrSnippet,
@@ -58,7 +59,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     address,
@@ -104,7 +105,7 @@ export const makeFunctionData = <
 
 /**
  * Sets a primary name for an address.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetPrimaryNameParameters}
  * @returns Transaction hash. {@link SetPrimaryNameReturnType}
  *
@@ -128,7 +129,7 @@ async function setPrimaryName<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     address,
@@ -140,14 +141,14 @@ async function setPrimaryName<
     {
       ...wallet,
       account: parseAccount((txArgs.account || wallet.account)!),
-    } as WalletWithEns<Transport, TChain, Account>,
+    } as ClientWithAccount<Transport, TChain, Account>,
     { name, address, resolverAddress } as SetPrimaryNameDataParameters,
   )
   const writeArgs = {
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setPrimaryName.makeFunctionData = makeFunctionData

@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest'
 import { publicClient } from '../../test/addTestContracts.js'
 import getNameHistory from './getNameHistory.js'
 

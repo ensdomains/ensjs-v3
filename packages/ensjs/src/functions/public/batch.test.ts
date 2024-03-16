@@ -1,5 +1,6 @@
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { describe, expect, it } from 'vitest'
 import { addEnsContracts } from '../../contracts/addEnsContracts.js'
 import {
   deploymentAddresses,
@@ -12,7 +13,7 @@ import getText from './getTextRecord.js'
 
 const mainnetPublicClient = createPublicClient({
   chain: addEnsContracts(mainnet),
-  transport: http('https://web3.ens.domains/v1/mainnet'),
+  transport: http('https://mainnet.gateway.tenderly.co/4imxc4hQfRjxrVB2kWKvTo'),
 })
 
 describe('batch', () => {

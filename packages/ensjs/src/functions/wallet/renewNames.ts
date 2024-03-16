@@ -5,8 +5,9 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
+import { sendTransaction } from 'viem/actions'
 import { bulkRenewalRenewAllSnippet } from '../../contracts/bulkRenewal.js'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { ethRegistrarControllerRenewSnippet } from '../../contracts/ethRegistrarController.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { UnsupportedNameTypeError } from '../../errors/general.js'
@@ -45,7 +46,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { nameOrNames, duration, value }: RenewNamesDataParameters,
 ): RenewNamesDataReturnType => {
   const names = Array.isArray(nameOrNames) ? nameOrNames : [nameOrNames]
@@ -92,7 +93,7 @@ export const makeFunctionData = <
 
 /**
  * Renews a name or names for a specified duration.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link RenewNamesParameters}
  * @returns Transaction hash. {@link RenewNamesReturnType}
  *
@@ -131,7 +132,7 @@ async function renewNames<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     nameOrNames,
     duration,
@@ -144,7 +145,7 @@ async function renewNames<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 renewNames.makeFunctionData = makeFunctionData

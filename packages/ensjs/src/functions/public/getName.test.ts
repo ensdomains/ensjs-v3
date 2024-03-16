@@ -1,4 +1,5 @@
 import { RawContractError, type Address, type Hex } from 'viem'
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import type { ClientWithEns } from '../../contracts/consts.js'
 import {
   deploymentAddresses,
@@ -7,6 +8,8 @@ import {
   waitForTransaction,
   walletClient,
 } from '../../test/addTestContracts.js'
+import createSubname from '../wallet/createSubname.js'
+import setAddressRecord from '../wallet/setAddressRecord.js'
 import setPrimaryName from '../wallet/setPrimaryName.js'
 import getName from './getName.js'
 
@@ -107,7 +110,7 @@ describe('getName', () => {
         { address: accounts[0], allowMismatch: true, strict: true },
       ),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "reverse" reverted.
+      [ContractFunctionExecutionError: The contract function "reverse" reverted.
 
       Error: ResolverNotFound()
        
@@ -116,7 +119,36 @@ describe('getName', () => {
         function:  reverse(bytes reverseName)
         args:             (0x)
 
-      Version: viem@1.16.3"
+      Version: viem@2.5.0]
     `)
+  })
+  it('should not return unnormalised name', async () => {
+    const tx1 = await createSubname(walletClient, {
+      name: 'suB.with-profile.eth',
+      contract: 'registry',
+      owner: accounts[0],
+      resolverAddress: deploymentAddresses.PublicResolver,
+      account: accounts[0],
+    })
+    await waitForTransaction(tx1)
+    const tx2 = await setAddressRecord(walletClient, {
+      name: 'suB.with-profile.eth',
+      coin: 'eth',
+      resolverAddress: deploymentAddresses.PublicResolver,
+      value: accounts[0],
+      account: accounts[0],
+    })
+    await waitForTransaction(tx2)
+    const tx3 = await setPrimaryName(walletClient, {
+      name: 'suB.with-profile.eth',
+      account: accounts[0],
+    })
+    await waitForTransaction(tx3)
+
+    const result = await getName(publicClient, {
+      address: accounts[0],
+    })
+
+    expect(result).toBeNull()
   })
 })

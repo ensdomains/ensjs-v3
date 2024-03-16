@@ -1,5 +1,5 @@
 import type { Address, Hex } from 'viem'
-import { getVersion } from '../../errors/error-utils.js'
+import { afterEach, beforeAll, beforeEach, expect, it } from 'vitest'
 import {
   publicClient,
   testClient,
@@ -66,11 +66,11 @@ it('should error if newRegistrantAddress is not specified for .eth', async () =>
       account: accounts[1],
     } as any),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Required parameter not specified: newRegistrantAddress
+    [RequiredParameterNotSpecifiedError: Required parameter not specified: newRegistrantAddress
 
     Details: Must provide newRegistrantAddress for eth-2ld names
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 it('should error if newRegistrantAddress is specified for non .eth', async () => {
@@ -82,12 +82,12 @@ it('should error if newRegistrantAddress is specified for non .eth', async () =>
       account: accounts[2],
     } as any),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Additional parameter specified: newRegistrantAddress
+    [AdditionalParameterSpecifiedError: Additional parameter specified: newRegistrantAddress
 
     - Allowed parameters: name, newOwnerAddress
 
     Details: newRegistrantAddress can only be specified for eth-2ld names
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })

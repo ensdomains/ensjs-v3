@@ -102,6 +102,7 @@ export type EnsPublicActions = {
     name,
     gatewayUrls,
     strict,
+    supportedContentTypes,
   }: GetAbiRecordParameters) => Promise<GetAbiRecordReturnType>
   /**
    * Gets an address record for a name and specified coin

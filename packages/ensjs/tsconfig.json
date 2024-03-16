@@ -12,11 +12,6 @@
   "exclude": [],
   "references": [{ "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "types": ["jest"],
-    "resolveJsonModule": true,
-    "paths": {
-      "abitype": ["./node_modules/abitype/dist"],
-      "viem": ["./node_modules/viem/_types"]
-    }
+    "resolveJsonModule": true
   }
 }

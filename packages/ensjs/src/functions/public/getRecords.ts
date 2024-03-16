@@ -10,7 +10,10 @@ import {
 } from 'viem'
 import type { ClientWithEns } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
-import { universalResolverResolveArraySnippet } from '../../contracts/universalResolver.js'
+import {
+  universalResolverResolveArraySnippet,
+  universalResolverResolveArrayWithGatewaysSnippet,
+} from '../../contracts/universalResolver.js'
 import type {
   DecodedAddr,
   DecodedText,
@@ -217,10 +220,10 @@ const encode = (
 
   return {
     to,
-    ...(gatewayUrls?.length
+    ...(gatewayUrls
       ? {
           data: encodeFunctionData({
-            abi: universalResolverResolveArraySnippet,
+            abi: universalResolverResolveArrayWithGatewaysSnippet,
             functionName: 'resolve',
             args: [...args, gatewayUrls] as const,
           }),
@@ -362,6 +365,7 @@ const decode = async <
     coins,
     contentHash,
     abi,
+    gatewayUrls,
   }: GetRecordsParameters<TTexts, TCoins, TContentHash, TAbi>,
 ): Promise<GetRecordsReturnType<TTexts, TCoins, TContentHash, TAbi>> => {
   const { calls } = passthrough
@@ -381,7 +385,9 @@ const decode = async <
   } else {
     const isSafe = checkSafeUniversalResolverData(data, {
       strict: false,
-      abi: universalResolverResolveArraySnippet,
+      abi: gatewayUrls
+        ? universalResolverResolveArrayWithGatewaysSnippet
+        : universalResolverResolveArraySnippet,
       args: passthrough.args,
       functionName: 'resolve',
       address: passthrough.address,

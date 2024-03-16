@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest'
 import { generateRecordCallArray } from './generateRecordCallArray.js'
 import { encodeAbi } from './index.js'
 import { namehash } from './normalise.js'

@@ -1,5 +1,5 @@
 import type { Address, Hex } from 'viem'
-import { getVersion } from '../../errors/error-utils.js'
+import { afterEach, beforeAll, beforeEach, expect, it } from 'vitest'
 import {
   publicClient,
   testClient,
@@ -177,9 +177,9 @@ it('should error if there are no records to set', async () => {
       account: accounts[1],
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "No records specified
+    [NoRecordsSpecifiedError: No records specified
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 it('should not wrap with multicall if only setting a single record', async () => {

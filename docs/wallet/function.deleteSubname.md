@@ -41,7 +41,7 @@ const hash = await deleteSubname(wallet, {
 
 | Parameter             | Type                            | Description                                                                        |
 | :-------------------- | :------------------------------ | :--------------------------------------------------------------------------------- |
-| `wallet`              | `object`                        | WalletWithEns                                                                      |
+| `wallet`              | `object`                        | ClientWithAccount                                                                  |
 | `parameters`          | `object`                        | DeleteSubnameParameters                                                            |
 | `parameters.asOwner`? | `boolean`                       | If true, deletes via owner methods, otherwise will delete via parent owner methods |
 | `parameters.contract` | `"nameWrapper"` \| `"registry"` | Contract to delete subname on                                                      |

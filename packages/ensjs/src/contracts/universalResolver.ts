@@ -67,6 +67,10 @@ const universalResolverReverse = {
 export const universalResolverReverseSnippet = [
   ...universalResolverErrors,
   universalResolverReverse,
+] as const
+
+export const universalResolverReverseWithGatewaysSnippet = [
+  ...universalResolverErrors,
   {
     ...universalResolverReverse,
     inputs: [
@@ -108,6 +112,10 @@ const universalResolverResolve = {
 export const universalResolverResolveSnippet = [
   ...universalResolverErrors,
   universalResolverResolve,
+] as const
+
+export const universalResolverResolveWithGatewaysSnippet = [
+  ...universalResolverErrors,
   {
     ...universalResolverResolve,
     inputs: [
@@ -159,6 +167,10 @@ const universalResolverResolveArray = {
 export const universalResolverResolveArraySnippet = [
   ...universalResolverErrors,
   universalResolverResolveArray,
+] as const
+
+export const universalResolverResolveArrayWithGatewaysSnippet = [
+  ...universalResolverErrors,
   {
     ...universalResolverResolveArray,
     inputs: [

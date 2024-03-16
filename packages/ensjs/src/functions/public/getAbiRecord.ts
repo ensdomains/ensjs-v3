@@ -44,10 +44,14 @@ const decode = async (
   client: ClientWithEns,
   data: Hex | BaseError,
   passthrough: GenericPassthrough,
-  { strict }: Pick<GetAbiRecordParameters, 'strict'>,
+  {
+    strict,
+    gatewayUrls,
+  }: Pick<GetAbiRecordParameters, 'strict' | 'gatewayUrls'>,
 ): Promise<GetAbiRecordReturnType> => {
   const urData = await universalWrapper.decode(client, data, passthrough, {
     strict,
+    gatewayUrls,
   })
   if (!urData) return null
   return _getAbi.decode(client, urData.data, { strict })
@@ -76,7 +80,7 @@ type BatchableFunctionObject = GeneratedFunction<typeof encode, typeof decode>
  */
 const getAbiRecord = generateFunction({ encode, decode }) as ((
   client: ClientWithEns,
-  { name, strict }: GetAbiRecordParameters,
+  { name, strict, gatewayUrls, supportedContentTypes }: GetAbiRecordParameters,
 ) => Promise<GetAbiRecordReturnType>) &
   BatchableFunctionObject
 

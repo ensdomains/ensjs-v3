@@ -42,7 +42,7 @@ const hash = await createSubname(wallet, {
 
 | Parameter    | Type                                                                  | Description             |
 | :----------- | :-------------------------------------------------------------------- | :---------------------- |
-| `wallet`     | `object`                                                              | WalletWithEns           |
+| `wallet`     | `object`                                                              | ClientWithAccount       |
 | `parameters` | `CreateSubnameParameters`\< `TChain`, `TAccount`, `TChainOverride` \> | CreateSubnameParameters |
 
 ## Returns

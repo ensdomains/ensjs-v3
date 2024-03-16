@@ -45,7 +45,7 @@ const hash = await commitName(wallet, {
 
 | Parameter                     | Type                          | Description                                                             |
 | :---------------------------- | :---------------------------- | :---------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------ | -------------------------- | ------------- | -------------------------------- |
-| `wallet`                      | `object`                      | WalletWithEns                                                           |
+| `wallet`                      | `object`                      | ClientWithAccount                                                       |
 | `parameters`                  | `object`                      | CommitNameParameters                                                    |
 | `parameters.duration`         | `number`                      | Duration of registration                                                |
 | `parameters.fuses`?           | `EncodeChildFusesInputObject` | Fuses to set upon registration                                          |

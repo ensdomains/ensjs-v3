@@ -8,7 +8,10 @@ import {
   type Address,
   type Hex,
 } from 'viem'
-import { CampaignReferenceTooLargeError } from '../errors/utils.js'
+import {
+  CampaignReferenceTooLargeError,
+  ResolverAddressRequiredError,
+} from '../errors/utils.js'
 import { EMPTY_ADDRESS } from './consts.js'
 import { encodeFuses, type EncodeChildFusesInputObject } from './fuses.js'
 import {
@@ -58,6 +61,13 @@ export type RegistrationTuple = [
   ownerControlledFuses: number,
 ]
 
+const cryptoRef =
+  (typeof crypto !== 'undefined' && crypto) ||
+  (typeof window !== 'undefined' &&
+    typeof window.crypto !== 'undefined' &&
+    window.crypto) ||
+  undefined
+
 export const randomSecret = ({
   platformDomain,
   campaign,
@@ -65,7 +75,7 @@ export const randomSecret = ({
   platformDomain?: string
   campaign?: number
 } = {}) => {
-  const bytes = crypto.getRandomValues(new Uint8Array(32))
+  const bytes = cryptoRef!.getRandomValues(new Uint8Array(32))
   if (platformDomain) {
     const hash = toBytes(namehash(platformDomain))
     for (let i = 0; i < 4; i += 1) {
@@ -113,6 +123,19 @@ export const makeCommitmentTuple = ({
   const data = records
     ? generateRecordCallArray({ namehash: hash, coins, ...records })
     : []
+
+  if (data.length > 0 && resolverAddress === EMPTY_ADDRESS)
+    throw new ResolverAddressRequiredError({
+      data: {
+        name,
+        owner,
+        duration,
+        resolverAddress,
+        records,
+        reverseRecord,
+        fuses,
+      },
+    })
 
   return [
     labelHash,

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { encodeSetAddr, type EncodeSetAddrParameters } from './encodeSetAddr.js'
 
 const namehash =

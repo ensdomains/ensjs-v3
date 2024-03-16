@@ -43,7 +43,7 @@ const hash = await unwrapName(wallet, {
 
 | Parameter    | Type                                                                        | Description          |
 | :----------- | :-------------------------------------------------------------------------- | :------------------- |
-| `wallet`     | `object`                                                                    | WalletWithEns        |
+| `wallet`     | `object`                                                                    | ClientWithAccount    |
 | `parameters` | `UnwrapNameParameters`\< `TName`, `TChain`, `TAccount`, `TChainOverride` \> | UnwrapNameParameters |
 
 ## Returns

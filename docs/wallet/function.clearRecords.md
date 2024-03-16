@@ -41,7 +41,7 @@ const hash = await clearRecords(wallet, {
 
 | Parameter                    | Type             | Description                   |
 | :--------------------------- | :--------------- | :---------------------------- |
-| `wallet`                     | `object`         | WalletWithEns                 |
+| `wallet`                     | `object`         | ClientWithAccount             |
 | `parameters`                 | `object`         | ClearRecordsParameters        |
 | `parameters.name`            | `string`         | The name to clear records for |
 | `parameters.resolverAddress` | \`0x$\{string}\` | The resolver address to use   |

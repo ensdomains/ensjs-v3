@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { encodeAbi } from './encodeAbi.js'
 import { encodeSetAbi, type EncodeSetAbiParameters } from './encodeSetAbi.js'
 

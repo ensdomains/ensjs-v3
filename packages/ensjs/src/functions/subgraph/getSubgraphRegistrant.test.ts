@@ -1,4 +1,4 @@
-import { getVersion } from '../../errors/error-utils.js'
+import { expect, it } from 'vitest'
 import {
   deploymentAddresses,
   publicClient,
@@ -23,12 +23,12 @@ it('throws an error for other name', async () => {
       name: 'test123.com',
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Unsupported name type: other-2ld
+    [UnsupportedNameTypeError: Unsupported name type: other-2ld
 
     - Supported name types: eth-2ld
 
     Details: Registrant can only be fetched for eth-2ld names
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })

@@ -6,7 +6,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { nameWrapperSetSubnodeRecordSnippet } from '../../contracts/nameWrapper.js'
 import { registrySetSubnodeRecordSnippet } from '../../contracts/registry.js'
@@ -76,7 +77,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     contract,
@@ -151,7 +152,7 @@ export const makeFunctionData = <
 
 /**
  * Creates a subname
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link CreateSubnameParameters}
  * @returns Transaction hash. {@link CreateSubnameReturnType}
  *
@@ -177,7 +178,7 @@ async function createSubname<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     contract,
@@ -200,7 +201,7 @@ async function createSubname<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 createSubname.makeFunctionData = makeFunctionData

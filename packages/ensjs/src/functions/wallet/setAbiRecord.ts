@@ -5,7 +5,8 @@ import type {
   SendTransactionParameters,
   Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import type {
   Prettify,
   SimpleTransactionRequest,
@@ -44,7 +45,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  _wallet: WalletWithEns<Transport, TChain, TAccount>,
+  _wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, encodedAbi, resolverAddress }: SetAbiRecordDataParameters,
 ): SetAbiRecordDataReturnType => {
   return {
@@ -58,7 +59,7 @@ export const makeFunctionData = <
 
 /**
  * Sets the ABI for a name on a resolver.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetAbiRecordParameters}
  * @returns Transaction hash. {@link SetAbiRecordReturnType}
  *
@@ -88,7 +89,7 @@ async function setAbiRecord<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     encodedAbi,
@@ -105,7 +106,7 @@ async function setAbiRecord<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setAbiRecord.makeFunctionData = makeFunctionData

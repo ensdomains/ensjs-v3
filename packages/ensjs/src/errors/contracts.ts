@@ -1,27 +1,27 @@
 import { BaseError } from './base.js'
 
-export class UnsupportedNetworkError extends BaseError {
-  network: string
+export class UnsupportedChainError extends BaseError {
+  chainId: number
 
-  supportedNetworks: readonly string[]
+  supportedChains: readonly number[]
 
-  override name = 'UnsupportedNetworkError'
+  override name = 'UnsupportedChainError'
 
   constructor({
-    network,
-    supportedNetworks,
+    chainId,
+    supportedChains,
     details,
   }: {
-    network: string
-    supportedNetworks: readonly string[]
+    chainId: number
+    supportedChains: readonly number[]
     details?: string
   }) {
-    super(`Unsupported network: ${network}`, {
-      metaMessages: [`- Supported networks: ${supportedNetworks.join(', ')}`],
+    super(`Unsupported chain: ${chainId}`, {
+      metaMessages: [`- Supported chains: ${supportedChains.join(', ')}`],
       details,
     })
-    this.network = network
-    this.supportedNetworks = supportedNetworks
+    this.chainId = chainId
+    this.supportedChains = supportedChains
   }
 }
 

@@ -6,9 +6,9 @@ import {
   type Hash,
   type SendTransactionParameters,
   type Transport,
-  type WalletClient,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import {
   dnsRegistrarProveAndClaimSnippet,
   dnsRegistrarProveAndClaimWithResolverSnippet,
@@ -64,7 +64,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletClient<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     dnsImportData,
@@ -112,7 +112,7 @@ export const makeFunctionData = <
 
 /**
  * Creates a transaction to import a DNS name to ENS.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link ImportDnsNameParameters}
  * @returns A transaction hash. {@link ImportDnsNameReturnType}
  *
@@ -144,7 +144,7 @@ async function importDnsName<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     address,
@@ -163,7 +163,7 @@ async function importDnsName<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 importDnsName.makeFunctionData = makeFunctionData

@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { generateSupportedContentTypes } from './generateSupportedContentTypes.js'
 
 type FunctionParameters = Parameters<typeof generateSupportedContentTypes>

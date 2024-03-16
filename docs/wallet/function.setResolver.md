@@ -42,7 +42,7 @@ const hash = await setResolver(wallet, {
 
 | Parameter                    | Type                            | Description                 |
 | :--------------------------- | :------------------------------ | :-------------------------- |
-| `wallet`                     | `object`                        | WalletWithEns               |
+| `wallet`                     | `object`                        | ClientWithAccount           |
 | `parameters`                 | `object`                        | SetResolverParameters       |
 | `parameters.contract`        | `"nameWrapper"` \| `"registry"` | Contract to set resolver on |
 | `parameters.name`            | `string`                        | Name to set resolver for    |

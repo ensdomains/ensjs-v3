@@ -43,7 +43,7 @@ const hash = await setContentHashRecord(wallet, {
 
 | Parameter                    | Type               | Description                             |
 | :--------------------------- | :----------------- | :-------------------------------------- |
-| `wallet`                     | `object`           | WalletWithEns                           |
+| `wallet`                     | `object`           | ClientWithAccount                       |
 | `parameters`                 | `object`           | SetContentHashRecordParameters          |
 | `parameters.contentHash`     | `null` \| `string` | Content hash value                      |
 | `parameters.name`            | `string`           | Name to set content hash for            |

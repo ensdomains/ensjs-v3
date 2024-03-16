@@ -62,7 +62,7 @@ const hash = await registerName(wallet, { ...params, value })
 
 | Parameter                     | Type                          | Description                                                             |
 | :---------------------------- | :---------------------------- | :---------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------ | -------------------------- | ------------- | -------------------------------- |
-| `wallet`                      | `object`                      | WalletWithEns                                                           |
+| `wallet`                      | `object`                      | ClientWithAccount                                                       |
 | `parameters`                  | `object`                      | RegisterNameParameters                                                  |
 | `parameters.duration`         | `number`                      | Duration of registration                                                |
 | `parameters.fuses`?           | `EncodeChildFusesInputObject` | Fuses to set upon registration                                          |

@@ -2,13 +2,26 @@
 import type { RequestListener } from 'http'
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
-import { getVersion } from '../../errors/error-utils.js'
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockedFunction,
+} from 'vitest'
 import { addEnsContracts } from '../../index.js'
 import { createHttpServer } from '../../test/createHttpServer.js'
 import { createHandlerResponse } from '../../test/dns.js'
 import getDnsOffchainData from './getDnsOffchainData.js'
 
-const handler: jest.MockedFunction<RequestListener> = jest.fn()
+vi.setConfig({
+  testTimeout: 10000,
+})
+
+const handler: MockedFunction<RequestListener> = vi.fn()
 let closeServer: () => Promise<unknown>
 let serverUrl: `http://${string}` = 'http://'
 
@@ -26,12 +39,9 @@ beforeEach(() => {
   handler.mockReset()
 })
 
-jest.setTimeout(10000)
-jest.retryTimes(2)
-
 const mainnetPublicClient = createPublicClient({
   chain: addEnsContracts(mainnet),
-  transport: http('https://web3.ens.domains/v1/mainnet'),
+  transport: http('https://mainnet.gateway.tenderly.co/4imxc4hQfRjxrVB2kWKvTo'),
 })
 
 it('returns offchain data', async () => {
@@ -44,6 +54,12 @@ it('returns offchain data', async () => {
         type: 16,
         TTL: 0,
         data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01"',
+      },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
       },
     ],
   })
@@ -72,6 +88,12 @@ it('returns offchain data with extra data as address', async () => {
         TTL: 0,
         data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01 0x8e8Db5CcEF88cca9d624701Db544989C996E3216"',
       },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
+      },
     ],
   })
 
@@ -99,6 +121,12 @@ it('returns offchain data with extra data as text', async () => {
         TTL: 0,
         data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01 hello world"',
       },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
+      },
     ],
   })
 
@@ -125,6 +153,12 @@ it('returns offchain data from ens name', async () => {
         type: 16,
         TTL: 0,
         data: '"ENS1 dnsname.ens.eth"',
+      },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
       },
     ],
   })
@@ -158,6 +192,12 @@ it('returns first offchain data from multiple', async () => {
         type: 16,
         TTL: 0,
         data: '"ENS1 0x8e8Db5CcEF88cca9d624701Db544989C996E3216"',
+      },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
       },
     ],
   })
@@ -198,6 +238,12 @@ it('returns first valid offchain data when multiple invalid', async () => {
         TTL: 0,
         data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01"',
       },
+      {
+        name: 'example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 2',
+      },
     ],
   })
 
@@ -225,6 +271,12 @@ it('allows subname input', async () => {
         TTL: 0,
         data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01"',
       },
+      {
+        name: 'sub.example.com',
+        type: 46,
+        TTL: 0,
+        data: 'TXT ALGORITHM 3',
+      },
     ],
   })
 
@@ -248,11 +300,11 @@ it('throws error when name type is .eth', async () => {
       endpoint: serverUrl,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Unsupported name type: eth-2ld
+    [UnsupportedNameTypeError: Unsupported name type: eth-2ld
 
     - Supported name types: other-2ld, other-subname
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 
@@ -272,9 +324,9 @@ describe('DnsResponseStatus is not NOERROR', () => {
         strict: true,
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "DNS query failed with status: NXDOMAIN
+      [DnsResponseStatusError: DNS query failed with status: NXDOMAIN
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 
@@ -305,9 +357,9 @@ describe('AD is false', () => {
         strict: true,
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "DNSSEC verification failed
+      [DnsDnssecVerificationFailedError: DNSSEC verification failed
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 
@@ -338,12 +390,58 @@ describe('no TXT records', () => {
         strict: true,
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "No TXT record found
+      [DnsNoTxtRecordError: No TXT record found
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 
+  it('not strict: returns null', async () => {
+    await expect(
+      getDnsOffchainData(mainnetPublicClient, {
+        name: 'example.com',
+        endpoint: serverUrl,
+        strict: false,
+      }),
+    ).resolves.toBeNull()
+  })
+})
+
+describe('wildcard expansion', () => {
+  beforeEach(() => {
+    createHandlerResponse(handler, {
+      Status: 0,
+      AD: true,
+      Answer: [
+        {
+          name: 'example.com',
+          type: 16,
+          TTL: 0,
+          data: '"ENS1 0x238A8F792dFA6033814B18618aD4100654aeef01"',
+        },
+        {
+          name: 'example.com',
+          type: 46,
+          TTL: 0,
+          data: 'TXT ALGORITHM 1',
+        },
+      ],
+    })
+  })
+
+  it('strict: throws error', async () => {
+    await expect(
+      getDnsOffchainData(mainnetPublicClient, {
+        name: 'example.com',
+        endpoint: serverUrl,
+        strict: true,
+      }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`
+      [DnsDnssecWildcardExpansionError: DNSSEC wildcard expansion not supported
+
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
+    `)
+  })
   it('not strict: returns null', async () => {
     await expect(
       getDnsOffchainData(mainnetPublicClient, {
@@ -373,6 +471,12 @@ describe('only invalid records', () => {
           TTL: 0,
           data: '"ENS1 randomnonsense"',
         },
+        {
+          name: 'example.com',
+          type: 46,
+          TTL: 0,
+          data: 'TXT ALGORITHM 2',
+        },
       ],
     })
   })
@@ -385,9 +489,9 @@ describe('only invalid records', () => {
         strict: true,
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Invalid TXT record: ENS1 0x238A8F7
+      [DnsInvalidTxtRecordError: Invalid TXT record: ENS1 0x238A8F7
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 
@@ -420,6 +524,12 @@ describe('no eligible invalid records', () => {
           TTL: 0,
           data: '"random"',
         },
+        {
+          name: 'example.com',
+          type: 46,
+          TTL: 0,
+          data: 'TXT ALGORITHM 2',
+        },
       ],
     })
   })
@@ -432,9 +542,9 @@ describe('no eligible invalid records', () => {
         strict: true,
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "No TXT record found
+      [DnsNoTxtRecordError: No TXT record found
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 

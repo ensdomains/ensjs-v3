@@ -2,13 +2,17 @@ import {
   BaseError,
   decodeFunctionResult,
   encodeFunctionData,
+  getAddress,
   toHex,
   type Address,
   type Hex,
 } from 'viem'
 import type { ClientWithEns } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
-import { universalResolverReverseSnippet } from '../../contracts/universalResolver.js'
+import {
+  universalResolverReverseSnippet,
+  universalResolverReverseWithGatewaysSnippet,
+} from '../../contracts/universalResolver.js'
 import type {
   GenericPassthrough,
   TransactionRequestWithPassthrough,
@@ -19,6 +23,7 @@ import {
   type GeneratedFunction,
 } from '../../utils/generateFunction.js'
 import { packetToBytes } from '../../utils/hexEncodedName.js'
+import { normalise } from '../../utils/normalise.js'
 
 export type GetNameParameters = {
   /** Address to get name for */
@@ -58,7 +63,7 @@ const encode = (
     ...(gatewayUrls?.length
       ? {
           data: encodeFunctionData({
-            abi: universalResolverReverseSnippet,
+            abi: universalResolverReverseWithGatewaysSnippet,
             functionName: 'reverse',
             args: [...args, gatewayUrls] as const,
           }),
@@ -85,11 +90,13 @@ const decode = async (
   _client: ClientWithEns,
   data: Hex | BaseError,
   passthrough: GenericPassthrough,
-  { address, allowMismatch, strict }: GetNameParameters,
+  { address, allowMismatch, strict, gatewayUrls }: GetNameParameters,
 ): Promise<GetNameReturnType | null> => {
   const isSafe = checkSafeUniversalResolverData(data, {
     strict,
-    abi: universalResolverReverseSnippet,
+    abi: gatewayUrls
+      ? universalResolverReverseWithGatewaysSnippet
+      : universalResolverReverseSnippet,
     args: passthrough.args,
     functionName: 'reverse',
     address: passthrough.address,
@@ -97,19 +104,25 @@ const decode = async (
   if (!isSafe) return null
 
   try {
-    const result = decodeFunctionResult({
+    const [
+      unnormalisedName,
+      forwardResolvedAddress,
+      reverseResolverAddress,
+      resolverAddress,
+    ] = decodeFunctionResult({
       abi: universalResolverReverseSnippet,
       functionName: 'reverse',
       data,
     })
-    if (!result[0]) return null
-    const match = result[1].toLowerCase() === address.toLowerCase()
+    if (!unnormalisedName) return null
+    const match = getAddress(forwardResolvedAddress) === getAddress(address)
     if (!match && !allowMismatch) return null
+    const normalisedName = normalise(unnormalisedName)
     return {
-      name: result[0],
-      match: result[1].toLowerCase() === address.toLowerCase(),
-      reverseResolverAddress: result[2],
-      resolverAddress: result[3],
+      name: normalisedName,
+      match,
+      reverseResolverAddress,
+      resolverAddress,
     }
   } catch (error) {
     if (strict) throw error

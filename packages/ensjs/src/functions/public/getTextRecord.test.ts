@@ -1,4 +1,5 @@
 import { RawContractError } from 'viem'
+import { describe, expect, it } from 'vitest'
 import type { ClientWithEns } from '../../contracts/consts.js'
 import { publicClient } from '../../test/addTestContracts.js'
 import getTextRecord from './getTextRecord.js'
@@ -48,7 +49,7 @@ describe('getTextRecord()', () => {
         { strict: true },
       ),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "resolve" reverted.
+      [ContractFunctionExecutionError: The contract function "resolve" reverted.
 
       Error: ResolverNotFound()
        
@@ -57,7 +58,7 @@ describe('getTextRecord()', () => {
         function:  resolve(bytes name, bytes data)
         args:             (0x, 0x)
 
-      Version: viem@1.16.3"
+      Version: viem@2.5.0]
     `)
   })
 })

@@ -1,5 +1,5 @@
 import { labelhash } from 'viem'
-import { getVersion } from '../errors/error-utils.js'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   decodeLabelhash,
   encodeLabelhash,
@@ -24,13 +24,13 @@ describe('decodeLabelhash()', () => {
         '9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658]',
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid encoded label
+      [InvalidEncodedLabelError: Invalid encoded label
 
       - Supplied label: 9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658]
 
       Details: Expected encoded labelhash to start and end with square brackets
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('throws error when label does not end with ]', () => {
@@ -39,13 +39,13 @@ describe('decodeLabelhash()', () => {
         '[9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658',
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid encoded label
+      [InvalidEncodedLabelError: Invalid encoded label
 
       - Supplied label: [9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658
 
       Details: Expected encoded labelhash to start and end with square brackets
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('throws error when label length is not 66', () => {
@@ -54,13 +54,13 @@ describe('decodeLabelhash()', () => {
         '[9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb65]',
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid encoded label
+      [InvalidEncodedLabelError: Invalid encoded label
 
       - Supplied label: [9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb65]
 
       Details: Expected encoded labelhash to have a length of 66
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })
@@ -81,13 +81,13 @@ describe('encodeLabelhash()', () => {
         '9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658',
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid labelhash
+      [InvalidLabelhashError: Invalid labelhash
 
       - Supplied labelhash: 9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658
 
       Details: Expected labelhash to start with 0x
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('throws error when labelhash length is not 66', () => {
@@ -96,13 +96,13 @@ describe('encodeLabelhash()', () => {
         '0x9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb65',
       ),
     ).toThrowErrorMatchingInlineSnapshot(`
-      "Invalid labelhash
+      [InvalidLabelhashError: Invalid labelhash
 
       - Supplied labelhash: 0x9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb65
 
       Details: Expected labelhash to have a length of 66
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })
@@ -122,7 +122,7 @@ describe('isEncodedLabelhash()', () => {
 
 describe('saveLabel()', () => {
   it('saves label to localStorage', () => {
-    jest.spyOn(global.localStorage, 'setItem')
+    vi.spyOn(global.localStorage, 'setItem')
     saveLabel('test')
     expect(global.localStorage.setItem).toHaveBeenCalledWith(
       'ensjs:labels',
@@ -136,7 +136,7 @@ describe('saveName()', () => {
     global.localStorage.clear()
   })
   it('saves each label from name to localStorage', () => {
-    jest.spyOn(global.localStorage, 'setItem')
+    vi.spyOn(global.localStorage, 'setItem')
     saveName('test.eth')
     expect(global.localStorage.setItem).toHaveBeenCalledWith(
       'ensjs:labels',
@@ -151,7 +151,7 @@ describe('saveName()', () => {
     )
   })
   it('does not save encoded label to localStorage', () => {
-    jest.spyOn(global.localStorage, 'setItem')
+    vi.spyOn(global.localStorage, 'setItem')
     saveName(
       '[9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658].eth',
     )

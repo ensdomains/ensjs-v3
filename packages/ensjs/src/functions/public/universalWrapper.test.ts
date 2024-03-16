@@ -1,4 +1,5 @@
 import { RawContractError, decodeFunctionData, hexToBytes } from 'viem'
+import { expect, it } from 'vitest'
 import { universalResolverResolveSnippet } from '../../contracts/universalResolver.js'
 import {
   deploymentAddresses,
@@ -67,12 +68,12 @@ it('throws on result decode error when strict is true', async () => {
       { strict: true },
     ),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Data size of 2 bytes is too small for given parameters.
+    [AbiDecodingDataSizeTooSmallError: Data size of 2 bytes is too small for given parameters.
 
     Params: (bytes data, address resolver)
     Data:   0x1234 (2 bytes)
 
-    Version: viem@1.16.3"
+    Version: viem@2.5.0]
   `)
 })
 
@@ -115,7 +116,7 @@ it('throws on known contract error when strict is true', async () => {
     function:  resolve(bytes name, bytes data)
     args:             (0x, 0x)
 
-  Version: viem@1.16.3]
+  Version: viem@2.5.0]
 `)
 })
 
@@ -133,20 +134,20 @@ it('throws on unknown contract error when strict is false', async () => {
       { strict: false },
     ),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "resolve" reverted with the following signature:
-      0x4ced43fb
+    [ContractFunctionExecutionError: The contract function "resolve" reverted with the following signature:
+    0x4ced43fb
 
-      Unable to decode signature "0x4ced43fb" as it was not found on the provided ABI.
-      Make sure you are using the correct ABI and that the error exists on it.
-      You can look up the decoded signature here: https://openchain.xyz/signatures?query=0x4ced43fb.
-       
-      Contract Call:
-        address:   0x1234567890abcdef
-        function:  resolve(bytes name, bytes data)
-        args:             (0x, 0x)
+    Unable to decode signature "0x4ced43fb" as it was not found on the provided ABI.
+    Make sure you are using the correct ABI and that the error exists on it.
+    You can look up the decoded signature here: https://openchain.xyz/signatures?query=0x4ced43fb.
+     
+    Contract Call:
+      address:   0x1234567890abcdef
+      function:  resolve(bytes name, bytes data)
+      args:             (0x, 0x)
 
-      Docs: https://viem.sh/docs/contract/decodeErrorResult.html
-      Version: viem@1.16.3"
+    Docs: https://viem.sh/docs/contract/decodeErrorResult
+    Version: viem@2.5.0]
   `)
 })
 
@@ -164,19 +165,19 @@ it('throws on unknown contract error when strict is true', async () => {
       { strict: true },
     ),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "resolve" reverted with the following signature:
-      0x4ced43fb
+    [ContractFunctionExecutionError: The contract function "resolve" reverted with the following signature:
+    0x4ced43fb
 
-      Unable to decode signature "0x4ced43fb" as it was not found on the provided ABI.
-      Make sure you are using the correct ABI and that the error exists on it.
-      You can look up the decoded signature here: https://openchain.xyz/signatures?query=0x4ced43fb.
-       
-      Contract Call:
-        address:   0x1234567890abcdef
-        function:  resolve(bytes name, bytes data)
-        args:             (0x, 0x)
+    Unable to decode signature "0x4ced43fb" as it was not found on the provided ABI.
+    Make sure you are using the correct ABI and that the error exists on it.
+    You can look up the decoded signature here: https://openchain.xyz/signatures?query=0x4ced43fb.
+     
+    Contract Call:
+      address:   0x1234567890abcdef
+      function:  resolve(bytes name, bytes data)
+      args:             (0x, 0x)
 
-      Docs: https://viem.sh/docs/contract/decodeErrorResult.html
-      Version: viem@1.16.3"
+    Docs: https://viem.sh/docs/contract/decodeErrorResult
+    Version: viem@2.5.0]
   `)
 })

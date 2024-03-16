@@ -7,12 +7,13 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
+import { sendTransaction } from 'viem/actions'
 import { parseAccount } from 'viem/utils'
 import {
   baseRegistrarReclaimSnippet,
   baseRegistrarSafeTransferFromSnippet,
 } from '../../contracts/baseRegistrar.js'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import {
   nameWrapperSafeTransferFromSnippet,
@@ -83,7 +84,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     newOwnerAddress,
@@ -202,7 +203,7 @@ export const makeFunctionData = <
 
 /**
  * Transfers a name to a new owner.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link TransferNameParameters}
  * @returns Transaction hash. {@link TransferNameReturnType}
  *
@@ -228,7 +229,7 @@ async function transferName<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     newOwnerAddress,
@@ -242,7 +243,7 @@ async function transferName<
     {
       ...wallet,
       account: parseAccount((txArgs.account || wallet.account)!),
-    } as WalletWithEns<Transport, TChain, Account>,
+    } as ClientWithAccount<Transport, TChain, Account>,
     {
       name,
       newOwnerAddress,
@@ -255,7 +256,7 @@ async function transferName<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 transferName.makeFunctionData = makeFunctionData

@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest'
 import { makeLabelNodeAndParent } from './makeLabelNodeAndParent.js'
 
 it('makes label node and parent', () => {

@@ -43,7 +43,7 @@ const hash = await setAddressRecord(wallet, {
 
 | Parameter                    | Type                 | Description                               |
 | :--------------------------- | :------------------- | :---------------------------------------- |
-| `wallet`                     | `object`             | WalletWithEns                             |
+| `wallet`                     | `object`             | ClientWithAccount                         |
 | `parameters`                 | `object`             | SetAddressRecordParameters                |
 | `parameters.coin`            | `string` \| `number` | Coin ticker or ID to set                  |
 | `parameters.name`            | `string`             | Name to set address record for            |

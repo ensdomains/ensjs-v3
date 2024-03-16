@@ -1,4 +1,5 @@
 import { namehash } from 'viem'
+import { describe, expect, it } from 'vitest'
 import { requestMiddleware, responseMiddleware } from './client.js'
 
 const queryWithoutId = `

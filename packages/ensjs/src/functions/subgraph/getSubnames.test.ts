@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 
+import { describe, expect, it } from 'vitest'
 import { publicClient } from '../../test/addTestContracts.js'
 import getSubnames from './getSubnames.js'
 import type { Name } from './utils.js'

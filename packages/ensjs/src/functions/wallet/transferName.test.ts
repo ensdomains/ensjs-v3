@@ -1,5 +1,5 @@
 import type { Address, Hex } from 'viem'
-import { getVersion } from '../../errors/error-utils.js'
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import {
   publicClient,
   testClient,
@@ -115,11 +115,11 @@ it('errors if unknown contract', async () => {
       account: accounts[1],
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Invalid contract type: random
+    [InvalidContractTypeError: Invalid contract type: random
 
     - Supported contract types: registry, registrar, nameWrapper
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 it('errors when reclaim is specified and contract is not registrar', async () => {
@@ -132,13 +132,13 @@ it('errors when reclaim is specified and contract is not registrar', async () =>
       account: accounts[1],
     } as any),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Additional parameter specified: reclaim
+    [AdditionalParameterSpecifiedError: Additional parameter specified: reclaim
 
     - Allowed parameters: name, newOwnerAddress, contract
 
     Details: Can't reclaim a name from any contract other than the registrar
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 
@@ -189,13 +189,13 @@ describe('subnames/asParent', () => {
         account: accounts[1],
       } as any),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Additional parameter specified: asParent
+      [AdditionalParameterSpecifiedError: Additional parameter specified: asParent
 
       - Allowed parameters: name, newOwnerAddress, contract, reclaim
 
       Details: Can't transfer a name as the parent owner on the registrar
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })

@@ -6,7 +6,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import {
   nameWrapperUnwrapEth2ldSnippet,
@@ -70,7 +71,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     newOwnerAddress,
@@ -120,7 +121,7 @@ export const makeFunctionData = <
 
 /**
  * Unwraps a name.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link UnwrapNameParameters}
  * @returns Transaction hash. {@link UnwrapNameReturnType}
  *
@@ -147,7 +148,7 @@ async function unwrapName<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     newOwnerAddress,
@@ -164,7 +165,7 @@ async function unwrapName<
     ...data,
     ...(txArgs as WriteTransactionParameters<TChain, TAccount, TChainOverride>),
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 unwrapName.makeFunctionData = makeFunctionData

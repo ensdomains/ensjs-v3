@@ -40,7 +40,7 @@ const hash = await setPrimaryName(wallet, {
 
 | Parameter    | Type                                                                   | Description              |
 | :----------- | :--------------------------------------------------------------------- | :----------------------- |
-| `wallet`     | `object`                                                               | WalletWithEns            |
+| `wallet`     | `object`                                                               | ClientWithAccount        |
 | `parameters` | `SetPrimaryNameParameters`\< `TChain`, `TAccount`, `TChainOverride` \> | SetPrimaryNameParameters |
 
 ## Returns

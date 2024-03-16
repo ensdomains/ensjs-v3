@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { publicClient } from '../../test/addTestContracts.js'
 import getWrapperName from './getWrapperName.js'
 

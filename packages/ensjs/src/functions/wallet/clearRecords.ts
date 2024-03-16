@@ -5,7 +5,8 @@ import type {
   SendTransactionParameters,
   Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import type {
   Prettify,
   SimpleTransactionRequest,
@@ -38,7 +39,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  _wallet: WalletWithEns<Transport, TChain, TAccount>,
+  _wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, resolverAddress }: ClearRecordsDataParameters,
 ): ClearRecordsDataReturnType => {
   return {
@@ -49,7 +50,7 @@ export const makeFunctionData = <
 
 /**
  * Clears the records for a name on a resolver.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link ClearRecordsParameters}
  * @returns Transaction hash. {@link ClearRecordsReturnType}
  *
@@ -74,7 +75,7 @@ async function clearRecords<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     resolverAddress,
@@ -89,7 +90,7 @@ async function clearRecords<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 clearRecords.makeFunctionData = makeFunctionData

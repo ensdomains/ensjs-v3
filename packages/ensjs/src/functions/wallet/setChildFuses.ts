@@ -6,7 +6,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { nameWrapperSetChildFusesSnippet } from '../../contracts/nameWrapper.js'
 import type {
@@ -43,7 +44,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, fuses, expiry }: SetChildFusesDataParameters,
 ): SetChildFusesDataReturnType => {
   const encodedFuses = encodeFuses({ input: fuses })
@@ -62,7 +63,7 @@ export const makeFunctionData = <
 
 /**
  * Sets the fuses for a name as the parent.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetChildFusesParameters}
  * @returns Transaction hash. {@link SetChildFusesReturnType}
  *
@@ -91,7 +92,7 @@ async function setChildFuses<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     fuses,
@@ -104,7 +105,7 @@ async function setChildFuses<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setChildFuses.makeFunctionData = makeFunctionData

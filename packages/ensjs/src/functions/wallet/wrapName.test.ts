@@ -1,7 +1,7 @@
 import type { Address, Hex } from 'viem'
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { registrySetApprovalForAllSnippet } from '../../contracts/registry.js'
-import { getVersion } from '../../errors/error-utils.js'
 import {
   publicClient,
   testClient,
@@ -107,13 +107,13 @@ describe('eth 2ld', () => {
         account: accounts[1],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Supplied label was too long
+      [WrappedLabelTooLargeError: Supplied label was too long
 
       - Supplied label: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       - Max byte length: 255
       - Actual byte length: 256
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })
@@ -165,13 +165,13 @@ describe('other', () => {
         account: accounts[2],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Additional parameter specified: fuses
+      [AdditionalParameterSpecifiedError: Additional parameter specified: fuses
 
       - Allowed parameters: name, wrappedOwner, resolverAddress
 
       Details: Fuses cannot be initially set when wrapping non eth-2ld names
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('should error for a label longer than 255 bytes', async () => {
@@ -183,13 +183,13 @@ describe('other', () => {
         account: accounts[2],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Supplied label was too long
+      [WrappedLabelTooLargeError: Supplied label was too long
 
       - Supplied label: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       - Max byte length: 255
       - Actual byte length: 256
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })

@@ -48,7 +48,7 @@ const hash = await importDnsName(wallet, {
 
 | Parameter    | Type                                                                  | Description             |
 | :----------- | :-------------------------------------------------------------------- | :---------------------- |
-| `wallet`     | `object`                                                              | WalletWithEns           |
+| `wallet`     | `object`                                                              | ClientWithAccount       |
 | `parameters` | `ImportDnsNameParameters`\< `TChain`, `TAccount`, `TChainOverride` \> | ImportDnsNameParameters |
 
 ## Returns

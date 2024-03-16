@@ -42,7 +42,7 @@ const hash = await wrapName(wallet, {
 
 | Parameter                     | Type                                                                                       | Description                         |
 | :---------------------------- | :----------------------------------------------------------------------------------------- | :---------------------------------- |
-| `wallet`                      | `object`                                                                                   | WalletWithEns                       |
+| `wallet`                      | `object`                                                                                   | ClientWithAccount                   |
 | `parameters`                  | `object`                                                                                   | WrapNameParameters                  |
 | `parameters.fuses`?           | `GetNameType`\< `TName` \> _extends_ `"eth-2ld"` ? `EncodeChildFusesInputObject` : `never` | Fuses to set on wrap (eth-2ld only) |
 | `parameters.name`             | `TName`                                                                                    | The name to wrap                    |

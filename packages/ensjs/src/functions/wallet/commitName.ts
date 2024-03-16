@@ -5,7 +5,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { ethRegistrarControllerCommitSnippet } from '../../contracts/ethRegistrarController.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { UnsupportedNameTypeError } from '../../errors/general.js'
@@ -40,7 +41,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   args: CommitNameDataParameters,
 ): CommitNameDataReturnType => {
   const labels = args.name.split('.')
@@ -67,7 +68,7 @@ export const makeFunctionData = <
 
 /**
  * Commits a name to be registered
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link CommitNameParameters}
  * @returns Transaction hash. {@link CommitNameReturnType}
  *
@@ -96,7 +97,7 @@ async function commitName<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     owner,
@@ -123,7 +124,7 @@ async function commitName<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 commitName.makeFunctionData = makeFunctionData

@@ -6,7 +6,8 @@ import {
   type SendTransactionParameters,
   type Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { nameWrapperSetResolverSnippet } from '../../contracts/nameWrapper.js'
 import { registrySetResolverSnippet } from '../../contracts/registry.js'
@@ -43,7 +44,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, contract, resolverAddress }: SetResolverDataParameters,
 ): SetResolverDataReturnType => {
   if (contract !== 'registry' && contract !== 'nameWrapper')
@@ -79,7 +80,7 @@ export const makeFunctionData = <
 
 /**
  * Sets a resolver for a name.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetResolverParameters}
  * @returns Transaction hash. {@link SetResolverReturnType}
  *
@@ -105,7 +106,7 @@ async function setResolver<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     contract,
@@ -118,7 +119,7 @@ async function setResolver<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setResolver.makeFunctionData = makeFunctionData

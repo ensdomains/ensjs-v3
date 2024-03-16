@@ -6,19 +6,8 @@
     "prettier",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "prettier", "jest"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "parser": "@typescript-eslint/parser",
-  "overrides": [
-    {
-      "files": ["**/*.spec.ts"],
-      "env": { "jest/globals": true },
-      "globals": {
-        "context": "readonly"
-      },
-      "plugins": ["jest"],
-      "extends": ["plugin:jest/recommended"]
-    }
-  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },

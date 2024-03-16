@@ -1,5 +1,5 @@
 import type { Chain } from 'viem'
-import { NoChainError, UnsupportedNetworkError } from '../errors/contracts.js'
+import { NoChainError, UnsupportedChainError } from '../errors/contracts.js'
 import {
   addresses,
   subgraphs,
@@ -24,19 +24,19 @@ import {
  */
 export const addEnsContracts = <const TChain extends Chain>(chain: TChain) => {
   if (!chain) throw new NoChainError()
-  if (!supportedChains.includes(chain.network as SupportedChain))
-    throw new UnsupportedNetworkError({
-      network: chain.network,
-      supportedNetworks: supportedChains,
+  if (!supportedChains.includes(chain.id as SupportedChain))
+    throw new UnsupportedChainError({
+      chainId: chain.id,
+      supportedChains,
     })
   return {
     ...chain,
     contracts: {
       ...chain.contracts,
-      ...addresses[chain.network as SupportedChain],
+      ...addresses[chain.id as SupportedChain],
     },
     subgraphs: {
-      ...subgraphs[chain.network as SupportedChain],
+      ...subgraphs[chain.id as SupportedChain],
     },
   } as unknown as CheckedChainWithEns<TChain>
 }

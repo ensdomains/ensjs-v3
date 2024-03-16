@@ -5,7 +5,8 @@ import type {
   SendTransactionParameters,
   Transport,
 } from 'viem'
-import type { ChainWithEns, WalletWithEns } from '../../contracts/consts.js'
+import { sendTransaction } from 'viem/actions'
+import type { ChainWithEns, ClientWithAccount } from '../../contracts/consts.js'
 import type {
   Prettify,
   SimpleTransactionRequest,
@@ -42,7 +43,7 @@ export const makeFunctionData = <
   TChain extends ChainWithEns,
   TAccount extends Account | undefined,
 >(
-  _wallet: WalletWithEns<Transport, TChain, TAccount>,
+  _wallet: ClientWithAccount<Transport, TChain, TAccount>,
   { name, coin, value, resolverAddress }: SetAddressRecordDataParameters,
 ): SetAddressRecordDataReturnType => {
   return {
@@ -53,7 +54,7 @@ export const makeFunctionData = <
 
 /**
  * Sets an address record for a name on a resolver.
- * @param wallet - {@link WalletWithEns}
+ * @param wallet - {@link ClientWithAccount}
  * @param parameters - {@link SetAddressRecordParameters}
  * @returns Transaction hash. {@link SetAddressRecordReturnType}
  *
@@ -80,7 +81,7 @@ async function setAddressRecord<
   TAccount extends Account | undefined,
   TChainOverride extends ChainWithEns | undefined = ChainWithEns,
 >(
-  wallet: WalletWithEns<Transport, TChain, TAccount>,
+  wallet: ClientWithAccount<Transport, TChain, TAccount>,
   {
     name,
     coin,
@@ -99,7 +100,7 @@ async function setAddressRecord<
     ...data,
     ...txArgs,
   } as SendTransactionParameters<TChain, TAccount, TChainOverride>
-  return wallet.sendTransaction(writeArgs)
+  return sendTransaction(wallet, writeArgs)
 }
 
 setAddressRecord.makeFunctionData = makeFunctionData

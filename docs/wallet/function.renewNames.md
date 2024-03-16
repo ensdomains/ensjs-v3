@@ -55,7 +55,7 @@ const hash = await renewNames(wallet, {
 
 | Parameter                | Type                   | Description                   |
 | :----------------------- | :--------------------- | :---------------------------- |
-| `wallet`                 | `object`               | WalletWithEns                 |
+| `wallet`                 | `object`               | ClientWithAccount             |
 | `parameters`             | `object`               | RenewNamesParameters          |
 | `parameters.duration`    | `number` \| `bigint`   | Duration to renew name(s) for |
 | `parameters.nameOrNames` | `string` \| `string`[] | Name or names to renew        |

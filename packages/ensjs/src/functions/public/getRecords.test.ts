@@ -1,5 +1,6 @@
 import { RawContractError, createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { describe, expect, it } from 'vitest'
 import { addEnsContracts } from '../../index.js'
 import {
   deploymentAddresses,
@@ -9,7 +10,7 @@ import getRecords from './getRecords.js'
 
 const mainnetPublicClient = createPublicClient({
   chain: addEnsContracts(mainnet),
-  transport: http('https://web3.ens.domains/v1/mainnet'),
+  transport: http('https://mainnet.gateway.tenderly.co/4imxc4hQfRjxrVB2kWKvTo'),
 })
 
 describe('getRecords()', () => {
@@ -132,7 +133,7 @@ describe('getRecords()', () => {
         { name: 'test.eth', coins: [60] },
       ),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "resolve" reverted with the following signature:
+      [ContractFunctionExecutionError: The contract function "resolve" reverted with the following signature:
       0x4ced43fb
 
       Unable to decode signature "0x4ced43fb" as it was not found on the provided ABI.
@@ -144,8 +145,8 @@ describe('getRecords()', () => {
         function:  resolve(bytes name, bytes[] data)
         args:             (0x04746573740365746800, ["0x5678"])
 
-      Docs: https://viem.sh/docs/contract/decodeErrorResult.html
-      Version: viem@1.16.3"
+      Docs: https://viem.sh/docs/contract/decodeErrorResult
+      Version: viem@2.5.0]
     `)
   })
 })

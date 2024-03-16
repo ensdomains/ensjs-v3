@@ -44,10 +44,15 @@ const decode = async (
   client: ClientWithEns,
   data: Hex | BaseError,
   passthrough: GenericPassthrough,
-  { coin, strict }: Pick<GetAddressRecordParameters, 'coin' | 'strict'>,
+  {
+    coin,
+    strict,
+    gatewayUrls,
+  }: Pick<GetAddressRecordParameters, 'coin' | 'strict' | 'gatewayUrls'>,
 ): Promise<GetAddressRecordReturnType> => {
   const urData = await universalWrapper.decode(client, data, passthrough, {
     strict,
+    gatewayUrls,
   })
   if (!urData) return null
   return _getAddr.decode(client, urData.data, { coin, strict })
@@ -76,7 +81,7 @@ type BatchableFunctionObject = GeneratedFunction<typeof encode, typeof decode>
  */
 const getAddressRecord = generateFunction({ encode, decode }) as ((
   client: ClientWithEns,
-  { name, coin, bypassFormat, strict }: GetAddressRecordParameters,
+  { name, coin, bypassFormat, strict, gatewayUrls }: GetAddressRecordParameters,
 ) => Promise<GetAddressRecordReturnType>) &
   BatchableFunctionObject
 

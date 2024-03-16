@@ -24,6 +24,11 @@
         "trailingUnderscore": "allowSingleOrDouble"
       },
       {
+        "selector": "objectLiteralProperty",
+        "filter": { "regex": "\\d+", "match": true },
+        "format": null
+      },
+      {
         "selector": "variable",
         "format": ["camelCase", "UPPER_CASE"],
         "leadingUnderscore": "allowSingleOrDouble",

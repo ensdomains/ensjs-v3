@@ -1,11 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { getVersion } from '../errors/error-utils.js'
+import {
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockedFunction,
+} from 'vitest'
 import { parseInput, validateName } from './validation.js'
 
 declare namespace localStorage {
-  const getItem: jest.MockedFn<Storage['getItem']>
-  const setItem: jest.MockedFn<Storage['setItem']>
-  const removeItem: jest.MockedFn<Storage['removeItem']>
+  const getItem: MockedFunction<Storage['getItem']>
+  const setItem: MockedFunction<Storage['setItem']>
+  const removeItem: MockedFunction<Storage['removeItem']>
 }
 
 const labelsMock = {
@@ -18,9 +25,9 @@ const labelsMockJSON = JSON.stringify(labelsMock)
 
 describe('validateName()', () => {
   beforeEach(() => {
-    localStorage.getItem.mockClear()
-    localStorage.setItem.mockClear()
-    localStorage.getItem.mockImplementation(() => labelsMockJSON)
+    localStorage.setItem('ensjs:labels', labelsMockJSON)
+    vi.spyOn(localStorage, 'getItem')
+    vi.spyOn(localStorage, 'setItem')
   })
   it('should throw if the name has an empty label', () => {
     expect(() => validateName('foo..bar')).toThrowError(
@@ -39,12 +46,12 @@ describe('validateName()', () => {
   it('should throw if the name has [root] as a label and is not the only label', () => {
     expect(() => validateName('foo.[root].bar'))
       .toThrowErrorMatchingInlineSnapshot(`
-      "Root name cannot have other labels
+        [RootNameIncludesOtherLabelsError: Root name cannot have other labels
 
-      - Supplied name: foo.[root].bar
+        - Supplied name: foo.[root].bar
 
-      Version: ${getVersion()}"
-    `)
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
+      `)
   })
 
   it('should get the decoded label hash from local storage', () => {

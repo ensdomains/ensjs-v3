@@ -48,7 +48,7 @@ const hash = await setRecords(wallet, {
 
 | Parameter                    | Type                                                  | Description                            |
 | :--------------------------- | :---------------------------------------------------- | :------------------------------------- |
-| `wallet`                     | `object`                                              | WalletWithEns                          |
+| `wallet`                     | `object`                                              | ClientWithAccount                      |
 | `parameters`                 | `object`                                              | SetRecordsParameters                   |
 | `parameters.abi`?            | `Omit`\< `EncodeSetAbiParameters`, `"namehash"` \>    | ABI value                              |
 | `parameters.clearRecords`?   | `boolean`                                             | Clears all current records             |

@@ -46,7 +46,7 @@ const hash = await setAbiRecord(wallet, {
 
 | Parameter                    | Type                   | Description                    |
 | :--------------------------- | :--------------------- | :----------------------------- |
-| `wallet`                     | `object`               | WalletWithEns                  |
+| `wallet`                     | `object`               | ClientWithAccount              |
 | `parameters`                 | `object`               | SetAbiRecordParameters         |
 | `parameters.encodedAbi`      | `null` \| `EncodedAbi` | Encoded ABI data to set        |
 | `parameters.name`            | `string`               | Name to set ABI for            |

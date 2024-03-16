@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest'
 import { MAX_DATE_INT } from './consts.js'
 import { makeSafeSecondsDate } from './makeSafeSecondsDate.js'
 

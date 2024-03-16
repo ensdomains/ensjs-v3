@@ -43,8 +43,10 @@ type GetNamesForAddressRelation = {
 }
 
 type GetNamesForAddressFilter = GetNamesForAddressRelation & {
-  /** Search string filter for subname label */
+  /** Search string filter for name */
   searchString?: string
+  /** Search string filter type (default: `labelName`) */
+  searchType?: 'labelName' | 'name'
   /** Allows expired names to be included (default: false) */
   allowExpired?: boolean
   /** Allows reverse record nodes to be included (default: false) */
@@ -179,8 +181,9 @@ const getNamesForAddress = async (
     allowExpired: false,
     allowDeleted: false,
     allowReverseRecord: false,
+    searchType: 'labelName',
     ..._filter,
-  }
+  } as const
 
   const subgraphClient = createSubgraphClient({ client })
 
@@ -189,6 +192,7 @@ const getNamesForAddress = async (
     allowDeleted,
     allowReverseRecord,
     searchString,
+    searchType,
     ...filters
   } = filter
   const ownerWhereFilters: DomainFilter[] = Object.entries(filters).reduce(
@@ -281,10 +285,8 @@ const getNamesForAddress = async (
   }
 
   if (searchString) {
-    // using labelName_contains instead of name_contains because name_contains
-    // includes the parent name
     whereFilters.push({
-      labelName_contains: searchString,
+      [`${searchType}_contains`]: searchString,
     })
   }
 

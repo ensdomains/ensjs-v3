@@ -1,4 +1,4 @@
-import { getVersion } from '../errors/error-utils.js'
+import { describe, expect, it } from 'vitest'
 import { expiryToBigInt, wrappedLabelLengthCheck } from './wrapper.js'
 
 describe('expiryToBigInt', () => {
@@ -22,7 +22,7 @@ describe('expiryToBigInt', () => {
   })
   it('throws when expiry is not bigint, string, number or Date', () => {
     expect(() => expiryToBigInt({} as any)).toThrowErrorMatchingInlineSnapshot(
-      `"Expiry must be a bigint, string, number or Date"`,
+      `[TypeError: Expiry must be a bigint, string, number or Date]`,
     )
   })
 })
@@ -34,13 +34,13 @@ describe('wrappedLabelLengthCheck', () => {
   it('throws when label is more than 255 bytes', () => {
     expect(() => wrappedLabelLengthCheck('a'.repeat(256)))
       .toThrowErrorMatchingInlineSnapshot(`
-      "Supplied label was too long
+        [WrappedLabelTooLargeError: Supplied label was too long
 
-      - Supplied label: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-      - Max byte length: 255
-      - Actual byte length: 256
+        - Supplied label: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        - Max byte length: 255
+        - Actual byte length: 256
 
-      Version: ${getVersion()}"
-    `)
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
+      `)
   })
 })

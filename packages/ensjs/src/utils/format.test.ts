@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { truncateFormat } from './format.js'
 
 describe('truncateFormat', () => {

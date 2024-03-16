@@ -1,5 +1,6 @@
 import { RawContractError, createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { describe, expect, it } from 'vitest'
 import { addEnsContracts } from '../../contracts/addEnsContracts.js'
 import type { ClientWithEns } from '../../contracts/consts.js'
 import { publicClient } from '../../test/addTestContracts.js'
@@ -7,7 +8,7 @@ import getAddressRecord from './getAddressRecord.js'
 
 const mainnetPublicClient = createPublicClient({
   chain: addEnsContracts(mainnet),
-  transport: http('https://web3.ens.domains/v1/mainnet'),
+  transport: http('https://mainnet.gateway.tenderly.co/4imxc4hQfRjxrVB2kWKvTo'),
 })
 
 describe('getAddressRecord()', () => {
@@ -111,7 +112,7 @@ describe('getAddressRecord()', () => {
         { strict: true },
       ),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "The contract function "resolve" reverted.
+      [ContractFunctionExecutionError: The contract function "resolve" reverted.
 
       Error: ResolverNotFound()
        
@@ -120,7 +121,7 @@ describe('getAddressRecord()', () => {
         function:  resolve(bytes name, bytes data)
         args:             (0x, 0x)
 
-      Version: viem@1.16.3"
+      Version: viem@2.5.0]
     `)
   })
 })

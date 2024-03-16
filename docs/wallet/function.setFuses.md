@@ -43,7 +43,7 @@ const hash = await setFuses(wallet, {
 
 | Parameter          | Type                          | Description           |
 | :----------------- | :---------------------------- | :-------------------- |
-| `wallet`           | `object`                      | WalletWithEns         |
+| `wallet`           | `object`                      | ClientWithAccount     |
 | `parameters`       | `object`                      | SetFusesParameters    |
 | `parameters.fuses` | `EncodeChildFusesInputObject` | Fuse object to set to |
 | `parameters.name`  | `string`                      | Name to set fuses for |

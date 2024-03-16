@@ -1,6 +1,7 @@
 import type { RequestListener } from 'http'
+import type { MockedFunction } from 'vitest'
 
-type Handler = jest.MockedFunction<RequestListener>
+type Handler = MockedFunction<RequestListener>
 
 export const createHandlerResponse = (handler: Handler, response: object) => {
   handler.mockImplementation((_req, res) => {

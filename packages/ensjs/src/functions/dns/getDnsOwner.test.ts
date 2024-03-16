@@ -1,10 +1,23 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { RequestListener } from 'http'
-import { getVersion } from '../../errors/error-utils.js'
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockedFunction,
+} from 'vitest'
 import { createHttpServer } from '../../test/createHttpServer.js'
 import getDnsOwner from './getDnsOwner.js'
 
-const handler: jest.MockedFunction<RequestListener> = jest.fn()
+vi.setConfig({
+  testTimeout: 10000,
+})
+
+const handler: MockedFunction<RequestListener> = vi.fn()
 let closeServer: () => Promise<unknown>
 let serverUrl: `http://${string}` = 'http://'
 
@@ -21,9 +34,6 @@ afterAll(async () => {
 beforeEach(() => {
   handler.mockReset()
 })
-
-jest.setTimeout(10000)
-jest.retryTimes(2)
 
 it('returns valid address from valid domain and record', async () => {
   let name
@@ -61,21 +71,21 @@ it('returns valid address from valid domain and record', async () => {
 it('throws error when .eth', async () => {
   await expect(getDnsOwner({ name: 'example.eth' })).rejects
     .toThrowErrorMatchingInlineSnapshot(`
-    "Unsupported name type: eth-2ld
+    [UnsupportedNameTypeError: Unsupported name type: eth-2ld
 
     - Supported name types: other-2ld
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 it('throws error when >2ld', async () => {
   await expect(getDnsOwner({ name: 'subdomain.example.com' })).rejects
     .toThrowErrorMatchingInlineSnapshot(`
-    "Unsupported name type: other-subname
+    [UnsupportedNameTypeError: Unsupported name type: other-subname
 
     - Supported name types: other-2ld
 
-    Version: ${getVersion()}"
+    Version: @ensdomains/ensjs@1.0.0-mock.0]
   `)
 })
 describe('DnsResponseStatus is not NOERROR', () => {
@@ -95,9 +105,9 @@ describe('DnsResponseStatus is not NOERROR', () => {
     await expect(
       getDnsOwner({ name: 'example.com', endpoint: serverUrl, strict: true }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "DNS query failed with status: NXDOMAIN
+      [DnsResponseStatusError: DNS query failed with status: NXDOMAIN
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('not strict: returns null', async () => {
@@ -127,9 +137,9 @@ describe('AD is false', () => {
     await expect(
       getDnsOwner({ name: 'example.com', endpoint: serverUrl, strict: true }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "DNSSEC verification failed
+      [DnsDnssecVerificationFailedError: DNSSEC verification failed
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('not strict: returns null', async () => {
@@ -157,9 +167,9 @@ describe('no TXT record', () => {
     await expect(
       getDnsOwner({ name: 'example.com', endpoint: serverUrl, strict: true }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "No TXT record found
+      [DnsNoTxtRecordError: No TXT record found
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('not strict: returns null', async () => {
@@ -194,9 +204,9 @@ describe('TXT record is not formatted correctly', () => {
     await expect(
       getDnsOwner({ name: 'example.com', endpoint: serverUrl, strict: true }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Invalid TXT record: 0x8e8Db5CcEF88cca9d624701Db544989C996E3216
+      [DnsInvalidTxtRecordError: Invalid TXT record: 0x8e8Db5CcEF88cca9d624701Db544989C996E3216
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('not strict: returns null', async () => {
@@ -231,9 +241,9 @@ describe('address is not checksummed', () => {
     await expect(
       getDnsOwner({ name: 'example.com', endpoint: serverUrl, strict: true }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Invalid address checksum: 0x8e8db5ccef88cca9d624701db544989c996e3216
+      [DnsInvalidAddressChecksumError: Invalid address checksum: 0x8e8db5ccef88cca9d624701db544989c996e3216
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('not strict: returns null', async () => {

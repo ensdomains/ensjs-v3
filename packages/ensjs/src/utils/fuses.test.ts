@@ -1,4 +1,4 @@
-import { getVersion } from '../errors/error-utils.js'
+import { describe, expect, it } from 'vitest'
 import {
   ChildFuseKeys,
   ChildFuses,
@@ -195,13 +195,13 @@ describe('encodeFuses', () => {
           input: { parent: { named: ['CAN_EXTEND_EXPIRY'] } } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Restriction not allowed
+        [FusesRestrictionNotAllowed: Restriction not allowed
 
         - Fuse value: [object Object]
 
         Details: Fuse restriction cannot be used when fuse category is specified
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow named/unnamed and number input', () => {
@@ -211,13 +211,13 @@ describe('encodeFuses', () => {
           input: { named: ['CANNOT_UNWRAP'], number: 1 } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid fuse value
+        [FusesInvalidFuseObjectError: Invalid fuse value
 
         - Fuse value: [object Object]
 
         Details: Cannot specify both a fuse number and named/unnamed fuses.
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow setting invalid named fuse', () => {
@@ -227,9 +227,9 @@ describe('encodeFuses', () => {
           input: { named: ['CANNOT_WRAP'] as any },
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "CANNOT_WRAP is not a valid named fuse
+        [FusesInvalidNamedFuseError: CANNOT_WRAP is not a valid named fuse
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow setting invalid unnamed fuse', () => {
@@ -239,11 +239,11 @@ describe('encodeFuses', () => {
           input: { unnamed: [129n as any] },
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "129 is not a valid unnamed fuse
+        [FusesInvalidUnnamedFuseError: 129 is not a valid unnamed fuse
 
         - If you are trying to set a named fuse, use the named property
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     describe('number input', () => {
@@ -251,14 +251,14 @@ describe('encodeFuses', () => {
         expect(() =>
           encodeFuses({ restriction: 'child', input: { number: 65536n } }),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
           - Fuse value: 65536
           - Allowed range: 0-65535
 
           Details: Cannot specify a fuse value to set that is outside of the child's control.
 
-          Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
       it('does not allow setting fuse larger than uint32 range', () => {
@@ -268,28 +268,28 @@ describe('encodeFuses', () => {
             input: { number: 2n ** 32n + 1n },
           }),
         ).toThrowErrorMatchingInlineSnapshot(`
-            "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
-            - Fuse value: 4294967297
-            - Allowed range: 0-4294967296
+          - Fuse value: 4294967297
+          - Allowed range: 0-4294967296
 
-            Details: Fuse number must be limited to uint32, the supplied value was too high
+          Details: Fuse number must be limited to uint32, the supplied value was too high
 
-            Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
       it('does not allow setting fuse smaller than uint32 range', () => {
         expect(() =>
           encodeFuses({ restriction: 'child', input: { number: -1n } }),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
           - Fuse value: -1
           - Allowed range: 0-4294967296
 
           Details: Fuse number must be limited to uint32, the supplied value was too low
 
-          Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
     })
@@ -337,14 +337,14 @@ describe('encodeFuses', () => {
           input: { child: { named: ['CANNOT_UNWRAP'] } } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-              "Restriction not allowed
+        [FusesRestrictionNotAllowed: Restriction not allowed
 
-              - Fuse value: [object Object]
+        - Fuse value: [object Object]
 
-              Details: Fuse restriction cannot be used when fuse category is specified
+        Details: Fuse restriction cannot be used when fuse category is specified
 
-              Version: ${getVersion()}"
-          `)
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
+      `)
     })
     it('does not allow named/unnamed and number input', () => {
       expect(() =>
@@ -353,13 +353,13 @@ describe('encodeFuses', () => {
           input: { named: ['PARENT_CANNOT_CONTROL'], number: 0x10000n } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid fuse value
+        [FusesInvalidFuseObjectError: Invalid fuse value
 
         - Fuse value: [object Object]
 
         Details: Cannot specify both a fuse number and named/unnamed fuses.
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow setting invalid named fuse', () => {
@@ -369,9 +369,9 @@ describe('encodeFuses', () => {
           input: { named: ['PARENT_CAN_CONTROL'] as any },
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "PARENT_CAN_CONTROL is not a valid named fuse
+        [FusesInvalidNamedFuseError: PARENT_CAN_CONTROL is not a valid named fuse
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow setting invalid unnamed fuse', () => {
@@ -381,11 +381,11 @@ describe('encodeFuses', () => {
           input: { unnamed: [1n as any] },
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "1 is not a valid unnamed fuse
+        [FusesInvalidUnnamedFuseError: 1 is not a valid unnamed fuse
 
         - If you are trying to set a named fuse, use the named property
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     describe('number input', () => {
@@ -393,14 +393,14 @@ describe('encodeFuses', () => {
         expect(() =>
           encodeFuses({ restriction: 'parent', input: { number: 65535n } }),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
           - Fuse value: 65535
           - Allowed range: 65536-4294967296
 
           Details: Cannot specify a fuse value to set that is outside of the parent's control.
 
-          Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
       it('does not allow setting larger than uint32 range', () => {
@@ -410,14 +410,14 @@ describe('encodeFuses', () => {
             input: { number: 2n ** 32n + 1n },
           }),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
           - Fuse value: 4294967297
           - Allowed range: 0-4294967296
 
           Details: Fuse number must be limited to uint32, the supplied value was too high
 
-          Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
       it('does not allow setting smaller than uint32 range', () => {
@@ -427,15 +427,15 @@ describe('encodeFuses', () => {
             input: { number: -1n },
           }),
         ).toThrowErrorMatchingInlineSnapshot(`
-                  "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
-                  - Fuse value: -1
-                  - Allowed range: 0-4294967296
+          - Fuse value: -1
+          - Allowed range: 0-4294967296
 
-                  Details: Fuse number must be limited to uint32, the supplied value was too low
+          Details: Fuse number must be limited to uint32, the supplied value was too low
 
-                  Version: ${getVersion()}"
-              `)
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
+        `)
       })
       it('does not allow setting non user-settable fuse', () => {
         expect(() =>
@@ -444,14 +444,14 @@ describe('encodeFuses', () => {
             input: { number: 0xfffdffffn },
           }),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+          [FusesOutOfRangeError: Fuse value out of range
 
           - Fuse value: 4294836223
           - Allowed range: 65536-4294967296
 
           Details: Cannot specify a fuse value to set that is outside of the parent's control.
 
-          Version: ${getVersion()}"
+          Version: @ensdomains/ensjs@1.0.0-mock.0]
         `)
       })
     })
@@ -509,13 +509,13 @@ describe('encodeFuses', () => {
           } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid fuse value
+        [FusesInvalidFuseObjectError: Invalid fuse value
 
         - Fuse value: [object Object]
 
         Details: Cannot specify both a fuse number and named/unnamed fuses.
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     it('does not allow named/unnamed and number input for child', () => {
@@ -527,54 +527,54 @@ describe('encodeFuses', () => {
           } as any,
         }),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Invalid fuse value
+        [FusesInvalidFuseObjectError: Invalid fuse value
 
         - Fuse value: [object Object]
 
         Details: Cannot specify both a fuse number and named/unnamed fuses.
 
-        Version: ${getVersion()}"
+        Version: @ensdomains/ensjs@1.0.0-mock.0]
       `)
     })
     describe('number input', () => {
       it('does not allow setting larger than uint32 range', () => {
         expect(() => encodeFuses({ input: { number: 2n ** 32n + 1n } }))
           .toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+            [FusesOutOfRangeError: Fuse value out of range
 
-          - Fuse value: 4294967297
-          - Allowed range: 0-4294967296
+            - Fuse value: 4294967297
+            - Allowed range: 0-4294967296
 
-          Details: Fuse number must be limited to uint32, the supplied value was too high
+            Details: Fuse number must be limited to uint32, the supplied value was too high
 
-          Version: ${getVersion()}"
-        `)
+            Version: @ensdomains/ensjs@1.0.0-mock.0]
+          `)
       })
       it('does not allow setting smaller than uint32 range', () => {
         expect(() => encodeFuses({ input: { number: -1n } }))
           .toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+            [FusesOutOfRangeError: Fuse value out of range
 
-          - Fuse value: -1
-          - Allowed range: 0-4294967296
+            - Fuse value: -1
+            - Allowed range: 0-4294967296
 
-          Details: Fuse number must be limited to uint32, the supplied value was too low
+            Details: Fuse number must be limited to uint32, the supplied value was too low
 
-          Version: ${getVersion()}"
-        `)
+            Version: @ensdomains/ensjs@1.0.0-mock.0]
+          `)
       })
       it('does not allow setting non user-settable fuse', () => {
         expect(() => encodeFuses({ input: { number: 0xffffffffn } }))
           .toThrowErrorMatchingInlineSnapshot(`
-          "Fuse value out of range
+            [FusesOutOfRangeError: Fuse value out of range
 
-          - Fuse value: 4294967295
-          - Allowed range: 0-4294967296
+            - Fuse value: 4294967295
+            - Allowed range: 0-4294967296
 
-          Details: Fuse number must be limited to user settable fuses, the supplied value was not
+            Details: Fuse number must be limited to user settable fuses, the supplied value was not
 
-          Version: ${getVersion()}"
-        `)
+            Version: @ensdomains/ensjs@1.0.0-mock.0]
+          `)
       })
     })
   })

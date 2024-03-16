@@ -2,6 +2,7 @@ import { isAddress, type Address, type Client, type Transport } from 'viem'
 import type { ChainWithEns } from '../../contracts/consts.js'
 import {
   DnsDnssecVerificationFailedError,
+  DnsDnssecWildcardExpansionError,
   DnsInvalidTxtRecordError,
   DnsNoTxtRecordError,
   DnsResponseStatusError,
@@ -109,6 +110,18 @@ const getDnsOffchainData = async (
       throw new DnsDnssecVerificationFailedError({ record: undefined })
 
     if (!response.Answer?.length) throw new DnsNoTxtRecordError()
+
+    const labels = name.split('.')
+    const rrsigRecord = response.Answer.find((record) => {
+      if (record.type !== DnsRecordType.RRSIG) return false
+      if (record.name !== name) return false
+      if (!record.data.startsWith('TXT')) return false
+      const [, , labelCount] = record.data.split(' ')
+      // mismatching label count implies wildcard expansion, which is not supported
+      return Number(labelCount) === labels.length
+    })
+
+    if (!rrsigRecord) throw new DnsDnssecWildcardExpansionError()
 
     const ensTxtRecords = await Promise.all(
       response.Answer.map((record) => checkValidEnsTxtRecord(client, record)),

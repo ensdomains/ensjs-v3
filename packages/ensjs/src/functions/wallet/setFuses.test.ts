@@ -1,7 +1,7 @@
 import type { Address, Hex } from 'viem'
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { getChainContractAddress } from '../../contracts/getChainContractAddress.js'
 import { nameWrapperGetDataSnippet } from '../../contracts/nameWrapper.js'
-import { getVersion } from '../../errors/error-utils.js'
 import {
   publicClient,
   testClient,
@@ -189,11 +189,11 @@ describe('Array', () => {
         account: accounts[1],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "32 is not a valid unnamed fuse
+      [FusesInvalidUnnamedFuseError: 32 is not a valid unnamed fuse
 
       - If you are trying to set a named fuse, use the named property
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('should throw an error when trying to burn an unnamed fuse in a named fuse array', async () => {
@@ -205,9 +205,9 @@ describe('Array', () => {
         },
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "COOL_SWAG_FUSE is not a valid named fuse
+      [FusesInvalidNamedFuseError: COOL_SWAG_FUSE is not a valid named fuse
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })
@@ -244,14 +244,14 @@ describe('Number', () => {
         account: accounts[1],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Fuse value out of range
+      [FusesOutOfRangeError: Fuse value out of range
 
       - Fuse value: 4294967297
       - Allowed range: 0-4294967296
 
       Details: Fuse number must be limited to uint32, the supplied value was too high
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
   it('should throw an error if the number is too low', async () => {
@@ -265,14 +265,14 @@ describe('Number', () => {
         account: accounts[1],
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Fuse value out of range
+      [FusesOutOfRangeError: Fuse value out of range
 
       - Fuse value: -1
       - Allowed range: 0-4294967296
 
       Details: Fuse number must be limited to uint32, the supplied value was too low
 
-      Version: ${getVersion()}"
+      Version: @ensdomains/ensjs@1.0.0-mock.0]
     `)
   })
 })

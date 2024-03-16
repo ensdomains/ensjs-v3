@@ -1,12 +1,6 @@
 {
   // This configuration is used for local development and type checking of configuration and script files that are not part of the build.
-  "include": [
-    "jest.config.js",
-    "jest.setup.ts",
-    "scripts",
-    "hardhat.config.cjs",
-    "deploy"
-  ],
+  "include": ["vitest.config.ts", "scripts", "hardhat.config.cjs", "deploy"],
   "compilerOptions": {
     "strict": true,
     "composite": true,

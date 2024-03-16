@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { namehash } from './normalise.js'
 
 describe('namehash()', () => {
