@@ -1,3 +1,4 @@
+export { ccipRequest } from './ccipRequest.js'
 export {
   getDnsTxtRecords,
   type GetDnsTxtRecordsParameters,
@@ -91,6 +92,7 @@ export {
   generateRecordCallArray,
   type RecordOptions,
 } from './generateRecordCallArray.js'
+export { generateSupportedContentTypes } from './generateSupportedContentTypes.js'
 export { bytesToPacket, packetToBytes } from './hexEncodedName.js'
 export {
   checkIsDecrypted,
@@ -145,4 +147,3 @@ export {
   expiryToBigInt,
   wrappedLabelLengthCheck,
 } from './wrapper.js'
-export { generateSupportedContentTypes } from './generateSupportedContentTypes.js'

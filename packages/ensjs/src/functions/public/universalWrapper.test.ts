@@ -73,7 +73,7 @@ it('throws on result decode error when strict is true', async () => {
     Params: (bytes data, address resolver)
     Data:   0x1234 (2 bytes)
 
-    Version: viem@2.5.0]
+    Version: viem@2.9.2]
   `)
 })
 
@@ -116,7 +116,7 @@ it('throws on known contract error when strict is true', async () => {
     function:  resolve(bytes name, bytes data)
     args:             (0x, 0x)
 
-  Version: viem@2.5.0]
+  Version: viem@2.9.2]
 `)
 })
 
@@ -147,7 +147,7 @@ it('throws on unknown contract error when strict is false', async () => {
       args:             (0x, 0x)
 
     Docs: https://viem.sh/docs/contract/decodeErrorResult
-    Version: viem@2.5.0]
+    Version: viem@2.9.2]
   `)
 })
 
@@ -178,6 +178,6 @@ it('throws on unknown contract error when strict is true', async () => {
       args:             (0x, 0x)
 
     Docs: https://viem.sh/docs/contract/decodeErrorResult
-    Version: viem@2.5.0]
+    Version: viem@2.9.2]
   `)
 })

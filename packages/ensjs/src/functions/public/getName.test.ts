@@ -119,7 +119,7 @@ describe('getName', () => {
         function:  reverse(bytes reverseName)
         args:             (0x)
 
-      Version: viem@2.5.0]
+      Version: viem@2.9.2]
     `)
   })
   it('should not return unnormalised name', async () => {

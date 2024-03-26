@@ -121,7 +121,7 @@ describe('getAddressRecord()', () => {
         function:  resolve(bytes name, bytes data)
         args:             (0x, 0x)
 
-      Version: viem@2.5.0]
+      Version: viem@2.9.2]
     `)
   })
 })

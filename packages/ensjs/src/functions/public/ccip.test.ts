@@ -2,6 +2,7 @@ import { createPublicClient, http } from 'viem'
 import { goerli, mainnet } from 'viem/chains'
 import { describe, expect, it, vi } from 'vitest'
 import { addEnsContracts } from '../../contracts/addEnsContracts.js'
+import { ccipRequest } from '../../utils/ccipRequest.js'
 import batch from './batch.js'
 import getAddressRecord from './getAddressRecord.js'
 import getRecords from './getRecords.js'
@@ -25,6 +26,55 @@ describe('CCIP', () => {
   describe('getRecords', () => {
     it('should return records from a ccip-read name', async () => {
       const result = await getRecords(goerliPublicClient, {
+        name: '1.offchainexample.eth',
+        texts: ['email', 'description'],
+        contentHash: true,
+        coins: ['ltc', '60'],
+      })
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "coins": [
+            {
+              "id": 2,
+              "name": "ltc",
+              "value": "MQMcJhpWHYVeQArcZR3sBgyPZxxRtnH441",
+            },
+            {
+              "id": 60,
+              "name": "eth",
+              "value": "0x41563129cDbbD0c5D3e1c86cf9563926b243834d",
+            },
+          ],
+          "contentHash": {
+            "decoded": "bafybeico3uuyj3vphxpvbowchdwjlrlrh62awxscrnii7w7flu5z6fk77y",
+            "protocolType": "ipfs",
+          },
+          "resolverAddress": "0xEE28bdfBB91dE63bfBDA454082Bb1850f7804B09",
+          "texts": [
+            {
+              "key": "email",
+              "value": "nick@ens.domains",
+            },
+            {
+              "key": "description",
+              "value": "hello offchainresolver wildcard record",
+            },
+          ],
+        }
+      `)
+    })
+    it('should return records from a ccip-read name with custom ccipRequest', async () => {
+      const goerliWithEns = addEnsContracts(goerli)
+      const goerliPublicClientWithCustomCcipRequest = createPublicClient({
+        chain: goerliWithEns,
+        transport: http(
+          'https://goerli.gateway.tenderly.co/4imxc4hQfRjxrVB2kWKvTo',
+        ),
+        ccipRead: {
+          request: ccipRequest(goerliWithEns),
+        },
+      })
+      const result = await getRecords(goerliPublicClientWithCustomCcipRequest, {
         name: '1.offchainexample.eth',
         texts: ['email', 'description'],
         contentHash: true,
