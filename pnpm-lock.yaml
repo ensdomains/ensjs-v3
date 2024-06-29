@@ -59,7 +59,7 @@ importers:
         version: link:../../packages/ensjs
       viem:
         specifier: ^1.2.9
-        version: 1.2.9(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)
+        version: 1.2.9(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)(zod@3.23.8)
 
   examples/basic-tsnode-esm:
     dependencies:
@@ -77,7 +77,7 @@ importers:
         version: 5.0.4
       viem:
         specifier: ^1.2.9
-        version: 1.2.9(bufferutil@4.0.6)(typescript@5.0.4)(utf-8-validate@5.0.9)
+        version: 1.2.9(bufferutil@4.0.6)(typescript@5.0.4)(utf-8-validate@5.0.9)(zod@3.23.8)
 
   packages/ens-test-env:
     dependencies:
@@ -137,7 +137,7 @@ importers:
         version: 0.5.1
       abitype:
         specifier: ^1.0.0
-        version: 1.0.0(typescript@5.3.2)
+        version: 1.0.0(typescript@5.3.2)(zod@3.23.8)
       dns-packet:
         specifier: ^5.3.1
         version: 5.4.0
@@ -145,8 +145,8 @@ importers:
         specifier: ^16.3.0
         version: 16.6.0
       graphql-request:
-        specifier: 6.1.0
-        version: 6.1.0(graphql@16.6.0)
+        specifier: 7.1.0
+        version: 7.1.0(graphql@16.6.0)
       pako:
         specifier: ^2.1.0
         version: 2.1.0
@@ -237,7 +237,7 @@ importers:
         version: 5.3.2
       viem:
         specifier: ^2.9.2
-        version: 2.9.2(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)
+        version: 2.9.2(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)(zod@3.23.8)
       vitest:
         specifier: ^1.3.1
         version: 1.3.1(@types/node@20.3.3)(happy-dom@13.3.8)
@@ -701,6 +701,12 @@ packages:
   '@metamask/eth-sig-util@4.0.1':
     resolution: {integrity: sha512-tghyZKLHZjcdlDqCA3gNZmLeR0XvOE9U1qoQO9ohyAZT6Pya+H9vkBPcsyXytmYLNgVoin7CKCmweo/R43V+tQ==}
     engines: {node: '>=12.0.0'}
+
+  '@molt/command@0.9.0':
+    resolution: {integrity: sha512-1JI8dAlpqlZoXyKWVQggX7geFNPxBpocHIXQCsnxDjKy+3WX4SGyZVJXuLlqRRrX7FmQCuuMAfx642ovXmPA9g==}
+
+  '@molt/types@0.2.0':
+    resolution: {integrity: sha512-p6ChnEZDGjg9PYPec9BK6Yp5/DdSrYQvXTBAtgrnqX6N36cZy37ql1c8Tc5LclfIYBNG7EZp8NBcRTYJwyi84g==}
 
   '@noble/curves@1.0.0':
     resolution: {integrity: sha512-2upgEu0iLiDVDZkNLeFV2+ht0BAVgQnEmCk6JsOch9Rp8xfkMCbvbAZlA2pBHQc73dbl+vFOXfqkf4uemdn0bw==}
@@ -1367,6 +1373,9 @@ packages:
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
+  alge@0.8.1:
+    resolution: {integrity: sha512-kiV9nTt+XIauAXsowVygDxMZLplZxDWt0W8plE/nB32/V2ziM/P/TxDbSVK7FYIUt2Xo16h3/htDh199LNPCKQ==}
+
   ansi-colors@3.2.4:
     resolution: {integrity: sha512-hHUXGagefjN2iRrID63xckIvotOXOojhQKWIPUZ4mNUZ9nLZW+7FMNoE1lOkEhNWYsx/7ysGIuJYCiMAA9FnrA==}
     engines: {node: '>=6'}
@@ -1394,6 +1403,10 @@ packages:
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
+
+  ansi-regex@6.0.1:
+    resolution: {integrity: sha512-n5M855fKb2SsfMIiFFoVrABHJC8QtHwVx+mHWP3QcEqBHYienj5dHSgjbxtC0WEZXYt4wcD6zrQElDPhFuZgfA==}
+    engines: {node: '>=12'}
 
   ansi-sequence-parser@1.1.0:
     resolution: {integrity: sha512-lEm8mt52to2fT8GhciPCGeCXACSz2UwIN4X2e2LJSnZ5uAbn2/dsYdOmUXq0AtWS5cpAupysIneExOgH0Vd2TQ==}
@@ -1721,6 +1734,10 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   change-case@3.0.2:
     resolution: {integrity: sha512-Mww+SLF6MZ0U6kdg11algyKd5BARbyM4TbFBepwowYSR5ClfQGCGtxNXgykpN0uF/bstWeaGDT4JWaDh8zWAHA==}
@@ -2798,10 +2815,21 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
-  graphql-request@6.1.0:
-    resolution: {integrity: sha512-p+XPfS4q7aIpKVcgmnZKhMNqhltk20hfXtkaIkTfjjmiKMJ5xrt5c743cL03y/K7y1rg3WrIC49xGiEQ4mxdNw==}
+  graphql-request@7.1.0:
+    resolution: {integrity: sha512-Ouu/lYVFhARS1aXeZoVJWnGT6grFJXTLwXJuK4mUGGRo0EUk1JkyYp43mdGmRgUVezpRm6V5Sq3t8jBDQcajng==}
+    hasBin: true
     peerDependencies:
+      '@dprint/formatter': ^0.3.0
+      '@dprint/typescript': ^0.91.1
+      dprint: ^0.46.2
       graphql: 14 - 16
+    peerDependenciesMeta:
+      '@dprint/formatter':
+        optional: true
+      '@dprint/typescript':
+        optional: true
+      dprint:
+        optional: true
 
   graphql@16.6.0:
     resolution: {integrity: sha512-KPIBPDlW7NxrbT/eh4qPXz5FiFdL5UbaA0XUNz2Rp3Z3hqBSkbj0GVjwFDztsWVauZUWsbKHgMg++sk8UX0bkw==}
@@ -3363,11 +3391,20 @@ packages:
   lodash.assign@4.2.0:
     resolution: {integrity: sha512-hFuH8TY+Yji7Eja3mGiuAxBqLagejScbG8GbG0j6o9vzn0YL14My+ktnqtZgFTosKymC9/44wP6s7xyuLfnClw==}
 
+  lodash.camelcase@4.3.0:
+    resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
+
   lodash.flatten@4.4.0:
     resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
 
+  lodash.ismatch@4.4.0:
+    resolution: {integrity: sha512-fPMfXjGQEV9Xsq/8MTSgUf255gawYRbjwMyDbcvDhXgV7enSZA0hynz6vMPnpAb5iONEzBHBPsT+0zes5Z301g==}
+
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+
+  lodash.snakecase@4.1.1:
+    resolution: {integrity: sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw==}
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -4078,6 +4115,10 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  readline-sync@1.4.10:
+    resolution: {integrity: sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==}
+    engines: {node: '>= 0.8.0'}
+
   reflect.getprototypeof@1.0.4:
     resolution: {integrity: sha512-ECkTw8TmJwW60lOTR+ZkODISW6RQ8+2CL3COqtiJKLd6MmB45hN51HprHFziKLGkAuTGQhBb91V8cy+KHlaCjw==}
     engines: {node: '>= 0.4'}
@@ -4095,6 +4136,9 @@ packages:
   regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}
     engines: {node: '>= 0.4'}
+
+  remeda@1.61.0:
+    resolution: {integrity: sha512-caKfSz9rDeSKBQQnlJnVW3mbVdFgxgGWQKq1XlFokqjf+hQD5gxutLGTTY2A/x24UxVyJe9gH5fAkFI63ULw4A==}
 
   request@2.88.2:
     resolution: {integrity: sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==}
@@ -4399,6 +4443,10 @@ packages:
     resolution: {integrity: sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ==}
     engines: {node: '>=0.10.0'}
 
+  string-length@6.0.0:
+    resolution: {integrity: sha512-1U361pxZHEQ+FeSjzqRpV+cu2vTzYeWeafXFLykiFlv4Vc0n3njgU8HrMbyik5uwm77naWMuVG8fhEF+Ovb1Kg==}
+    engines: {node: '>=16'}
+
   string-width@1.0.2:
     resolution: {integrity: sha512-0XsVpQLnVCXHJfyEs8tC0zpTVIr5PKKsQtkT29IwupnPTjtPmQ3xT/4yCREF9hYkV/3M3kzcUTSAZT6a6h81tw==}
     engines: {node: '>=0.10.0'}
@@ -4443,6 +4491,10 @@ packages:
   strip-ansi@6.0.1:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
     engines: {node: '>=8'}
+
+  strip-ansi@7.1.0:
+    resolution: {integrity: sha512-iq6eVVI64nQQTRYq2KtEg2d2uU7LElhTJwsH4YzIHZshxlgZms/wIc4VoDQTlG/IvVIrBKG06CrZnp0qv7hkcQ==}
+    engines: {node: '>=12'}
 
   strip-bom@2.0.0:
     resolution: {integrity: sha512-kwrX1y7czp1E69n2ajbG65mIo9dqvJ+8aBQXOGVxqwvNbsXdFM6Lq37dLAY3mknUwru8CfcCbfOLL/gMo+fi3g==}
@@ -4601,6 +4653,9 @@ packages:
       '@swc/wasm':
         optional: true
 
+  ts-toolbelt@9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+
   tsconfig-paths@3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
 
@@ -4644,6 +4699,10 @@ packages:
   type-fest@0.7.1:
     resolution: {integrity: sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==}
     engines: {node: '>=8'}
+
+  type-fest@4.20.1:
+    resolution: {integrity: sha512-R6wDsVsoS9xYOpy8vgeBlqpdOyzJ12HNfQhC/aAKWM3YoCV9TtunJzh/QpkMgeDhkoynDcw5f1y+qF9yc/HHyg==}
+    engines: {node: '>=16'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -5270,6 +5329,9 @@ packages:
     resolution: {integrity: sha512-Zz83eOWLqPs88kgczkJLhst192oqtj7uzI3PaGyR9lkfQLL5eMEMZ+pD1eYPppTE1GohmGxhqnEf5HxG7WF0QA==}
     peerDependencies:
       ethers: ~5.5.0
+
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -5947,6 +6009,24 @@ snapshots:
       ethjs-util: 0.1.6
       tweetnacl: 1.0.3
       tweetnacl-util: 0.15.1
+
+  '@molt/command@0.9.0':
+    dependencies:
+      '@molt/types': 0.2.0
+      alge: 0.8.1
+      chalk: 5.3.0
+      lodash.camelcase: 4.3.0
+      lodash.snakecase: 4.1.1
+      readline-sync: 1.4.10
+      string-length: 6.0.0
+      strip-ansi: 7.1.0
+      ts-toolbelt: 9.6.0
+      type-fest: 4.20.1
+      zod: 3.23.8
+
+  '@molt/types@0.2.0':
+    dependencies:
+      ts-toolbelt: 9.6.0
 
   '@noble/curves@1.0.0':
     dependencies:
@@ -6721,17 +6801,22 @@ snapshots:
     optionalDependencies:
       typescript: 5.3.2
 
-  abitype@0.8.11(typescript@5.0.4):
+  abitype@0.8.11(typescript@5.0.4)(zod@3.23.8):
     dependencies:
       typescript: 5.0.4
+    optionalDependencies:
+      zod: 3.23.8
 
-  abitype@0.8.11(typescript@5.3.2):
+  abitype@0.8.11(typescript@5.3.2)(zod@3.23.8):
     dependencies:
       typescript: 5.3.2
+    optionalDependencies:
+      zod: 3.23.8
 
-  abitype@1.0.0(typescript@5.3.2):
+  abitype@1.0.0(typescript@5.3.2)(zod@3.23.8):
     optionalDependencies:
       typescript: 5.3.2
+      zod: 3.23.8
 
   abort-controller@3.0.0:
     dependencies:
@@ -6790,6 +6875,13 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
+  alge@0.8.1:
+    dependencies:
+      lodash.ismatch: 4.4.0
+      remeda: 1.61.0
+      ts-toolbelt: 9.6.0
+      zod: 3.23.8
+
   ansi-colors@3.2.4: {}
 
   ansi-colors@4.1.1: {}
@@ -6805,6 +6897,8 @@ snapshots:
   ansi-regex@3.0.1: {}
 
   ansi-regex@5.0.1: {}
+
+  ansi-regex@6.0.1: {}
 
   ansi-sequence-parser@1.1.0: {}
 
@@ -6936,7 +7030,7 @@ snapshots:
 
   axios@0.25.0:
     dependencies:
-      follow-redirects: 1.15.1
+      follow-redirects: 1.15.1(debug@4.3.4)
     transitivePeerDependencies:
       - debug
 
@@ -7207,6 +7301,8 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  chalk@5.3.0: {}
 
   change-case@3.0.2:
     dependencies:
@@ -8407,8 +8503,6 @@ snapshots:
     dependencies:
       imul: 1.0.1
 
-  follow-redirects@1.15.1: {}
-
   follow-redirects@1.15.1(debug@4.3.4):
     optionalDependencies:
       debug: 4.3.4(supports-color@8.1.1)
@@ -8668,13 +8762,12 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql-request@6.1.0(graphql@16.6.0):
+  graphql-request@7.1.0(graphql@16.6.0):
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.6.0)
-      cross-fetch: 3.1.5
+      '@molt/command': 0.9.0
       graphql: 16.6.0
-    transitivePeerDependencies:
-      - encoding
+      zod: 3.23.8
 
   graphql@16.6.0: {}
 
@@ -9293,9 +9386,15 @@ snapshots:
 
   lodash.assign@4.2.0: {}
 
+  lodash.camelcase@4.3.0: {}
+
   lodash.flatten@4.4.0: {}
 
+  lodash.ismatch@4.4.0: {}
+
   lodash.merge@4.6.2: {}
+
+  lodash.snakecase@4.1.1: {}
 
   lodash@4.17.21: {}
 
@@ -9986,6 +10085,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  readline-sync@1.4.10: {}
+
   reflect.getprototypeof@1.0.4:
     dependencies:
       call-bind: 1.0.5
@@ -10010,6 +10111,8 @@ snapshots:
       call-bind: 1.0.5
       define-properties: 1.2.1
       set-function-name: 2.0.1
+
+  remeda@1.61.0: {}
 
   request@2.88.2:
     dependencies:
@@ -10390,6 +10493,10 @@ snapshots:
 
   strict-uri-encode@1.1.0: {}
 
+  string-length@6.0.0:
+    dependencies:
+      strip-ansi: 7.1.0
+
   string-width@1.0.2:
     dependencies:
       code-point-at: 1.1.0
@@ -10463,6 +10570,10 @@ snapshots:
   strip-ansi@6.0.1:
     dependencies:
       ansi-regex: 5.0.1
+
+  strip-ansi@7.1.0:
+    dependencies:
+      ansi-regex: 6.0.1
 
   strip-bom@2.0.0:
     dependencies:
@@ -10661,6 +10772,8 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.3.68
 
+  ts-toolbelt@9.6.0: {}
+
   tsconfig-paths@3.14.1:
     dependencies:
       '@types/json5': 0.0.29
@@ -10695,6 +10808,8 @@ snapshots:
   type-fest@0.21.3: {}
 
   type-fest@0.7.1: {}
+
+  type-fest@4.20.1: {}
 
   type-is@1.6.18:
     dependencies:
@@ -10857,7 +10972,7 @@ snapshots:
       core-util-is: 1.0.2
       extsprintf: 1.3.0
 
-  viem@1.2.9(bufferutil@4.0.6)(typescript@5.0.4)(utf-8-validate@5.0.9):
+  viem@1.2.9(bufferutil@4.0.6)(typescript@5.0.4)(utf-8-validate@5.0.9)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0
@@ -10865,7 +10980,7 @@ snapshots:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@wagmi/chains': 1.2.0(typescript@5.0.4)
-      abitype: 0.8.11(typescript@5.0.4)
+      abitype: 0.8.11(typescript@5.0.4)(zod@3.23.8)
       isomorphic-ws: 5.0.0(ws@8.12.0(bufferutil@4.0.6)(utf-8-validate@5.0.9))
       ws: 8.12.0(bufferutil@4.0.6)(utf-8-validate@5.0.9)
     optionalDependencies:
@@ -10875,7 +10990,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  viem@1.2.9(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9):
+  viem@1.2.9(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0
@@ -10883,7 +10998,7 @@ snapshots:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@wagmi/chains': 1.2.0(typescript@5.3.2)
-      abitype: 0.8.11(typescript@5.3.2)
+      abitype: 0.8.11(typescript@5.3.2)(zod@3.23.8)
       isomorphic-ws: 5.0.0(ws@8.12.0(bufferutil@4.0.6)(utf-8-validate@5.0.9))
       ws: 8.12.0(bufferutil@4.0.6)(utf-8-validate@5.0.9)
     optionalDependencies:
@@ -10893,14 +11008,14 @@ snapshots:
       - utf-8-validate
       - zod
 
-  viem@2.9.2(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9):
+  viem@2.9.2(bufferutil@4.0.6)(typescript@5.3.2)(utf-8-validate@5.0.9)(zod@3.23.8):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
       '@noble/hashes': 1.3.2
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
-      abitype: 1.0.0(typescript@5.3.2)
+      abitype: 1.0.0(typescript@5.3.2)(zod@3.23.8)
       isows: 1.0.3(ws@8.13.0(bufferutil@4.0.6)(utf-8-validate@5.0.9))
       ws: 8.13.0(bufferutil@4.0.6)(utf-8-validate@5.0.9)
     optionalDependencies:
@@ -11614,3 +11729,5 @@ snapshots:
   zksync-web3@0.7.13(ethers@5.7.2(bufferutil@4.0.6)(utf-8-validate@5.0.9)):
     dependencies:
       ethers: 5.7.2(bufferutil@4.0.6)(utf-8-validate@5.0.9)
+
+  zod@3.23.8: {}

@@ -105,7 +105,7 @@
     "abitype": "^1.0.0",
     "dns-packet": "^5.3.1",
     "graphql": "^16.3.0",
-    "graphql-request": "6.1.0",
+    "graphql-request": "7.1.0",
     "pako": "^2.1.0"
   },
   "devDependencies": {
