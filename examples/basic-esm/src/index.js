@@ -5,7 +5,7 @@ import { mainnet } from 'viem/chains'
 
 const client = createEnsPublicClient({
   chain: mainnet,
-  transport: http('https://web3.ens.domains/v1/mainnet'),
+  transport: http('https://web3.euc.li/v1/mainnet'),
 })
 
 const main = async () => {
