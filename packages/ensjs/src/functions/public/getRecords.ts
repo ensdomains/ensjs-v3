@@ -469,11 +469,9 @@ type BatchableFunctionObject = {
  * })
  * const result = await getRecords(client, {
  *   name: 'ens.eth',
- *   records: {
- *     texts: ['com.twitter', 'com.github'],
- *     coins: ['ETH'],
- *     contentHash: true,
- *   },
+ *   texts: ['com.twitter', 'com.github'],
+ *   coins: ['ETH'],
+ *   contentHash: true,
  * })
  * // { texts: [{ key: 'com.twitter', value: 'ensdomains' }, { key: 'com.github', value: 'ensdomains' }], coins: [{ id: 60, name: 'ETH', value: '0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7' }], contentHash: { protocolType: 'ipns', decoded: 'k51qzi5uqu5djdczd6zw0grmo23j2vkj9uzvujencg15s5rlkq0ss4ivll8wqw' } }
  */
